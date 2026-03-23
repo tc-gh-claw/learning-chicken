@@ -206,9 +206,6 @@ class EffectsSystem {
     }
 }
 
-// 創建全局特效實例
-const effects = new EffectsSystem();
-
 // 擴展 CSS 動畫
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
@@ -312,4 +309,11 @@ styleSheet.textContent = `
         100% { transform: translateX(100%); }
     }
 `;
-document.head.appendChild(styleSheet);
+
+// 創建全局特效實例
+const effects = new EffectsSystem();
+
+// 頁面加載後添加樣式
+document.addEventListener('DOMContentLoaded', () => {
+    document.head.appendChild(styleSheet);
+});
