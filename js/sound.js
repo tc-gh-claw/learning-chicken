@@ -15,7 +15,13 @@ class SoundSystem {
         if (this.initialized) return;
         
         try {
-            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) {
+                console.warn('Web Audio API not supported');
+                this.enabled = false;
+                return;
+            }
+            this.audioContext = new AudioContext();
             this.initialized = true;
         } catch (e) {
             console.warn('Web Audio API not supported');

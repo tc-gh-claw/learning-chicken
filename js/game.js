@@ -44,8 +44,12 @@ class LearningChickenGame {
 
     // ===== 遊戲開始 =====
     start() {
-        soundSystem.init();
-        soundSystem.unlock();
+        try {
+            soundSystem.init();
+            soundSystem.unlock();
+        } catch (e) {
+            console.warn('音效初始化失敗:', e);
+        }
         this.updateUI();
         this.showScreen('main-screen');
     }

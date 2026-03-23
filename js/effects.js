@@ -15,24 +15,28 @@ class EffectsSystem {
     initCanvas() {
         if (this.canvas) return;
         
-        this.canvas = document.createElement('canvas');
-        this.canvas.id = 'effects-canvas';
-        this.canvas.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        `;
-        document.body.appendChild(this.canvas);
-        
-        this.ctx = this.canvas.getContext('2d');
-        this.resize();
-        
-        window.addEventListener('resize', () => this.resize());
-        this.startAnimation();
+        try {
+            this.canvas = document.createElement('canvas');
+            this.canvas.id = 'effects-canvas';
+            this.canvas.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9999;
+            `;
+            document.body.appendChild(this.canvas);
+            
+            this.ctx = this.canvas.getContext('2d');
+            this.resize();
+            
+            window.addEventListener('resize', () => this.resize());
+            this.startAnimation();
+        } catch (e) {
+            console.warn('特效初始化失敗:', e);
+        }
     }
 
     resize() {
