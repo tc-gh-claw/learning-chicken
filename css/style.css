@@ -1,0 +1,934 @@
+/* 學習雞 - 主樣式 */
+
+:root {
+    --primary: #FF9F43;
+    --secondary: #FECA57;
+    --accent: #FF6B6B;
+    --success: #1DD1A1;
+    --warning: #FECA57;
+    --info: #48DBFB;
+    --text: #2D3436;
+    --text-light: #636E72;
+    --bg: #FEF9E7;
+    --card-bg: #FFFFFF;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --shadow-hover: 0 8px 25px rgba(0,0,0,0.15);
+    --radius: 16px;
+    --radius-sm: 8px;
+    --font-display: 'ZCOOL KuaiLe', cursive;
+    --font-body: 'Noto Sans TC', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background: linear-gradient(135deg, #FEF9E7 0%, #FFF5E6 50%, #FFF0F5 100%);
+    min-height: 100vh;
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+#app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 畫面切換 */
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 啟動畫面 ===== */
+#start-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#start-screen.active {
+    display: flex;
+}
+
+.logo-container {
+    margin-bottom: 60px;
+}
+
+.chicken-logo {
+    font-size: 120px;
+    animation: bounce 2s infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+h1 {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: var(--primary);
+    text-shadow: 3px 3px 0px rgba(255,159,67,0.3);
+    margin-bottom: 10px;
+}
+
+.tagline {
+    font-size: 18px;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.start-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 280px;
+}
+
+.version {
+    position: absolute;
+    bottom: 20px;
+    font-size: 12px;
+    color: var(--text-light);
+    opacity: 0.6;
+}
+
+/* ===== 按鈕樣式 ===== */
+.btn {
+    padding: 16px 32px;
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 4px 15px rgba(255,159,67,0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255,159,67,0.5);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--text);
+    border: 2px solid var(--secondary);
+}
+
+.btn-secondary:hover {
+    background: var(--secondary);
+    color: white;
+}
+
+.btn-feed {
+    background: linear-gradient(135deg, var(--success), #10AC84);
+    color: white;
+    width: 100%;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(29,209,161,0.4);
+}
+
+.btn-feed:disabled {
+    background: #B2BEC3;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.btn-feed:not(:disabled):hover {
+    transform: scale(1.02);
+}
+
+.btn-menu {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+/* ===== 遊戲頭部 ===== */
+.game-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.level-badge {
+    background: linear-gradient(135deg, var(--accent), #FF8E8E);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.progress-container {
+    flex: 1;
+}
+
+.progress-label {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #E8E8E8;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success), #10AC84);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+/* ===== 雞舍場景 ===== */
+.chicken-house {
+    background: white;
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+}
+
+.scene-background {
+    position: relative;
+    height: 80px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.clouds {
+    position: absolute;
+    top: 10px;
+    font-size: 24px;
+    opacity: 0.6;
+    animation: float 6s infinite ease-in-out;
+}
+
+.sun {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    font-size: 40px;
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(20px); }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ===== 學習雞 ===== */
+.chicken-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0;
+    position: relative;
+}
+
+.chicken {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chicken-body {
+    font-size: 100px;
+    z-index: 2;
+    animation: chickenIdle 3s infinite ease-in-out;
+}
+
+@keyframes chickenIdle {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-5px) scale(1.02); }
+}
+
+.chicken-shadow {
+    position: absolute;
+    bottom: 10px;
+    width: 80px;
+    height: 20px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50%;
+    animation: shadowScale 3s infinite ease-in-out;
+}
+
+@keyframes shadowScale {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(0.9); opacity: 0.2; }
+}
+
+.chicken-name {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--primary);
+    margin-top: 15px;
+}
+
+.chicken-title {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 5px;
+}
+
+.evolution-glow {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,214,100,0.4) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.evolution-glow.active {
+    opacity: 1;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* ===== 飼料槽 ===== */
+.feed-slots {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.feed-slot {
+    background: #F8F9FA;
+    border: 3px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.feed-slot:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.feed-slot[data-subject="chinese"] { border-color: #FF6B6B; }
+.feed-slot[data-subject="english"] { border-color: #4ECDC4; }
+.feed-slot[data-subject="math"] { border-color: #45B7D1; }
+.feed-slot[data-subject="general"] { border-color: #96CEB4; }
+
+.feed-icon {
+    font-size: 28px;
+}
+
+.feed-count {
+    background: var(--primary);
+    color: white;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feed-label {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.feed-hint {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 10px;
+}
+
+/* ===== 科目統計 ===== */
+.subject-stats {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    border-radius: var(--radius);
+    padding: 15px;
+    box-shadow: var(--shadow);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-icon {
+    font-size: 24px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* ===== 答題畫面 ===== */
+#quiz-screen {
+    padding: 0;
+    background: linear-gradient(180deg, #FEF9E7 0%, #FFF 100%);
+}
+
+.quiz-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    gap: 15px;
+}
+
+.quiz-subject {
+    flex: 1;
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--primary);
+}
+
+.quiz-grade {
+    background: var(--secondary);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.quiz-container {
+    padding: 20px;
+}
+
+.question-counter {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.question-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 25px 20px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.question-text {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+.question-hint {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-btn {
+    background: white;
+    border: 2px solid #E8E8E8;
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    font-size: 17px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.option-btn:hover:not(.disabled) {
+    border-color: var(--primary);
+    background: #FFF9F0;
+}
+
+.option-btn.correct {
+    background: #D4EDDA;
+    border-color: var(--success);
+    color: #155724;
+}
+
+.option-btn.wrong {
+    background: #F8D7DA;
+    border-color: var(--accent);
+    color: #721C24;
+}
+
+.option-btn.disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.option-letter {
+    width: 32px;
+    height: 32px;
+    background: var(--secondary);
+    color: var(--text);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* ===== 答題結果 ===== */
+.quiz-result {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    z-index: 100;
+}
+
+.result-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+
+.result-text {
+    font-family: var(--font-display);
+    font-size: 32px;
+    color: var(--text);
+    margin-bottom: 15px;
+}
+
+.result-reward {
+    font-size: 18px;
+    color: var(--primary);
+    margin-bottom: 30px;
+    padding: 15px 25px;
+    background: #FFF9F0;
+    border-radius: var(--radius-sm);
+}
+
+/* ===== 進化畫面 ===== */
+#evolution-screen {
+    background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+}
+
+.evolution-scene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+}
+
+.evolution-title {
+    font-family: var(--font-display);
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.evolution-subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 40px;
+}
+
+.evolution-animation {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin-bottom: 40px;
+}
+
+.evo-chicken {
+    font-size: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+}
+
+.evo-chicken.hidden {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.evo-effects {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.sparkle {
+    position: absolute;
+    font-size: 30px;
+    animation: sparkle 1s infinite;
+}
+
+.sparkle:nth-child(1) { top: 0; left: 20%; animation-delay: 0s; }
+.sparkle:nth-child(2) { top: 30%; right: 0; animation-delay: 0.3s; }
+.sparkle:nth-child(3) { bottom: 20%; left: 10%; animation-delay: 0.6s; }
+
+@keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+}
+
+.evolution-stats {
+    background: rgba(255,255,255,0.2);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+}
+
+.btn-evolution {
+    background: linear-gradient(135deg, #F093FB, #F5576C);
+    color: white;
+    font-size: 22px;
+    padding: 20px 50px;
+    box-shadow: 0 8px 30px rgba(245,87,108,0.4);
+}
+
+.btn-evolution:hover {
+    transform: scale(1.05);
+}
+
+/* ===== 圖鑑畫面 ===== */
+.screen-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #F0F0F0;
+}
+
+.screen-header h2 {
+    flex: 1;
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--text);
+}
+
+.collection-count {
+    background: var(--primary);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.collection-filter {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 2px solid #E8E8E8;
+    background: white;
+    border-radius: 20px;
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.collection-item {
+    aspect-ratio: 1;
+    background: white;
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+}
+
+.collection-item.locked {
+    background: #F0F0F0;
+    opacity: 0.5;
+}
+
+.collection-item.unlocked {
+    border: 2px solid var(--primary);
+}
+
+.collection-emoji {
+    font-size: 40px;
+    margin-bottom: 5px;
+}
+
+.collection-name {
+    font-size: 11px;
+    text-align: center;
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* ===== 彈窗 ===== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--radius);
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content h3 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary);
+}
+
+.tutorial-content {
+    margin-bottom: 25px;
+}
+
+.tutorial-step {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+}
+
+.step-num {
+    width: 32px;
+    height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.tutorial-step p {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+.tutorial-step strong {
+    color: var(--primary);
+}
+
+/* 進化結果彈窗 */
+.evolution-result {
+    text-align: center;
+}
+
+.result-chicken {
+    font-size: 100px;
+    margin-bottom: 15px;
+}
+
+.result-description {
+    color: var(--text-light);
+    margin: 15px 0;
+    font-size: 15px;
+}
+
+.result-badges {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: white;
+    padding: 6px 14px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ===== 動畫效果 ===== */
+.feed-animation {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    animation: feedFloat 1s ease forwards;
+}
+
+@keyframes feedFloat {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+}
+
+/* ===== 響應式設計 ===== */
+@media (max-width: 400px) {
+    h1 { font-size: 40px; }
+    .chicken-logo { font-size: 100px; }
+    .feed-slots { gap: 8px; }
+    .collection-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 481px) {
+    #app {
+        box-shadow: 0 0 40px rgba(0,0,0,0.1);
+    }
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🐔 學習雞 - 養成你的知識夥伴</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 啟動畫面 -->
+        <div id="start-screen" class="screen active">
+            <div class="logo-container">
+                <div class="chicken-logo">🐣</div>
+                <h1>學習雞</h1>
+                <p class="tagline">答題養成 · 知識進化</p>
+            </div>
+            <div class="start-buttons">
+                <button class="btn btn-primary" onclick="game.start()">🎮 開始遊戲</button>
+                <button class="btn btn-secondary" onclick="game.showTutorial()">📖 遊戲說明</button>
+            </div>
+            <div class="version">v1.0.0</div>
+        </div>
+
+        <!-- 主遊戲畫面 -->
+        <div id="main-screen" class="screen">
+            <!-- 頂部狀態欄 -->
+            <header class="game-header">
+                <div class="level-badge">Lv.<span id="level">1</span></div>
+                <div class="progress-container">
+                    <div class="progress-label">成長值 <span id="progress-text">0/20</span></div>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                <button class="btn-menu" onclick="game.toggleMenu()">☰</button>
+            </header>
+
+            <!-- 雞舍場景 -->
+            <div class="chicken-house">
+                <div class="scene-background">
+                    <div class="clouds">☁️ ☁️ ☁️</div>
+                    <div class="sun">☀️</div>
+                </div>
+                
+                <!-- 學習雞 -->
+                <div id="chicken-container" class="chicken-container">
+                    <div id="chicken" class="chicken stage-egg">
+                        <div class="chicken-body">
+                            <span class="chicken-emoji">🥚</span>
+                        </div>
+                        <div class="chicken-shadow"></div>
+                        <div class="evolution-glow" id="evolution-glow"></div>
+                    </div>
+                    <div class="chicken-name" id="chicken-name">蛋蛋</div>
+                    <div class="chicken-title" id="chicken-title">等待孵化...</div>
+                </div>
+
+                <!-- 飼料槽 -->
+                <div class="feed-slots">
+                    <div class="feed-slot" data-subject="chinese" onclick="game.startQuiz('chinese')">
+                        <span class="feed-icon">📝</span>
+                        <span class="feed-count" id="feed-chinese">0</span>
+                        <span class="feed-label">中文飼料</span>
+                    </div>
+                    <div class="feed-slot" data-subject="english" onclick="game.startQuiz('english')">
+                        <span class="feed-icon">🔤</span>
+                        <span class="feed-count" id="feed-english">0</span>
+                        <span class="feed-label">英文飼料</span>
+                    </div>
+                    <div class="feed-slot" data-subject="math" onclick="game.startQuiz('math')">
+                        <span class="feed-icon">🔢</span>
+                        <span class="feed-count" id="feed-math">0</span>
+                        <span class="feed-label">數學飼料</span>
+                    </div>
+                    <div class="feed-slot" data-subject="general" onclick="game.startQuiz('general')">
+                        <span class="feed-icon">🌍</span>
+                        <span class="feed-count" id="feed-general">0</span>
+                        <span class="feed-label">常識飼料</span>
+                    </div>
+                </div>
+
+                <!-- 餵食按鈕 -->
+                <button id="feed-btn" class="btn btn-feed" onclick="game.feedChicken()" disabled>
+                    🍽️ 餵食學習雞
+                </button>
+                <p class="feed-hint">選擇科目答題獲得飼料</p>
+            </div>
+
+            <!-- 科目統計 -->
+            <div class="subject-stats">
+                <div class="stat-item">
+                    <span class="stat-icon">📝</span>
+                    <span class="stat-value" id="stat-chinese">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🔤</span>
+                    <span class="stat-value" id="stat-english">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🔢</span>
+                    <span class="stat-value" id="stat-math">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🌍</span>
+                    <span class="stat-value" id="stat-general">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 答題畫面 -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <button class="btn-back" onclick="game.backToMain()">←</button>
+                <span class="quiz-subject" id="quiz-subject-name">中文</span>
+                <span class="quiz-grade" id="quiz-grade">一年級</span>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="question-counter">題目 <span id="q-current">1</span>/5</div>
+                
+                <div class="question-card">
+                    <div class="question-text" id="question-text">題目載入中...</div>
+                    <div class="question-hint" id="question-hint"></div>
+                </div>
+
+                <div class="options-container" id="options-container">
+                    <!-- 選項由JS動態生成 -->
+                </div>
+            </div>
+
+            <div class="quiz-result" id="quiz-result" style="display: none;">
+                <div class="result-icon" id="result-icon">✅</div>
+                <div class="result-text" id="result-text">答對了！</div>
+                <div class="result-reward" id="result-reward">獲得 📝 中文飼料 x1</div>
+                <button class="btn btn-primary" onclick="game.nextQuestion()">下一題</button>
+            </div>
+        </div>
+
+        <!-- 進化畫面 -->
+        <div id="evolution-screen" class="screen">
+            <div class="evolution-scene">
+                <h2 class="evolution-title">✨ 進化時刻 ✨</h2>
+                <p class="evolution-subtitle">你的學習雞準備進化了！</p>
+                
+                <div class="evolution-animation">
+                    <div id="evo-old" class="evo-chicken">🥚</div>
+                    <div class="evo-effects">
+                        <span class="sparkle">✨</span>
+                        <span class="sparkle">⭐</span>
+                        <span class="sparkle">🌟</span>
+                    </div>
+                    <div id="evo-new" class="evo-chicken hidden">?</div>
+                </div>
+
+                <div class="evolution-stats" id="evolution-stats">
+                    <!-- 顯示各科答對數 -->
+                </div>
+
+                <button class="btn btn-evolution" onclick="game.performEvolution()">
+                    🌈 開始進化
+                </button>
+            </div>
+        </div>
+
+        <!-- 圖鑑畫面 -->
+        <div id="collection-screen" class="screen">
+            <header class="screen-header">
+                <button class="btn-back" onclick="game.backToMain()">←</button>
+                <h2>🐔 學習雞圖鑑</h2>
+                <span class="collection-count"><span id="collected">0</span>/30</span>
+            </header>
+            
+            <div class="collection-filter">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="balanced">全能型</button>
+                <button class="filter-btn" data-filter="chinese">語文型</button>
+                <button class="filter-btn" data-filter="math">數學型</button>
+                <button class="filter-btn" data-filter="english">英文型</button>
+                <button class="filter-btn" data-filter="general">常識型</button>
+                <button class="filter-btn" data-filter="special">彩蛋型</button>
+            </div>
+
+            <div class="collection-grid" id="collection-grid">
+                <!-- 由JS生成 -->
+            </div>
+        </div>
+
+        <!-- 說明彈窗 -->
+        <div id="tutorial-modal" class="modal">
+            <div class="modal-content">
+                <h3>📖 遊戲說明</h3>
+                <div class="tutorial-content">
+                    <div class="tutorial-step">
+                        <span class="step-num">1</span>
+                        <p><strong>選擇科目</strong><br>點擊飼料槽選擇科目答題</p>
+                    </div>
+                    <div class="tutorial-step">
+                        <span class="step-num">2</span>
+                        <p><strong>答對獲飼料</strong><br>答對題目獲得對應科目飼料</p>
+                    </div>
+                    <div class="tutorial-step">
+                        <span class="step-num">3</span>
+                        <p><strong>餵食成長</strong><br>用飼料餵食學習雞提升成長值</p>
+                    </div>
+                    <div class="tutorial-step">
+                        <span class="step-num">4</span>
+                        <p><strong>進化條件</strong><br>累計答對20題觸發進化</p>
+                    </div>
+                    <div class="tutorial-step">
+                        <span class="step-num">5</span>
+                        <p><strong>30種形態</strong><br>根據答題表現進化成不同形態</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="game.closeModal()">知道了！</button>
+            </div>
+        </div>
+
+        <!-- 進化結果彈窗 -->
+        <div id="evolution-result-modal" class="modal">
+            <div class="modal-content evolution-result">
+                <div class="result-chicken" id="result-chicken-emoji">🐔</div>
+                <h2 id="result-chicken-name">學習雞</h2>
+                <p id="result-chicken-title">基礎形態</p>
+                <div class="result-description" id="result-description">
+                    一隻熱愛學習的小雞
+                </div>
+                <div class="result-badges" id="result-badges">
+                    <!-- 徽章 -->
+                </div>
+                <button class="btn btn-primary" onclick="game.closeEvolutionResult()">繼續培育</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/questions.js"></script>
+    <script src="js/evolutions.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
