@@ -61,7 +61,7 @@ const QUESTION_BANK = {
         { grade: 2, question: "'I have ___ apple.' 填什麼？", options: ["an", "a", "the", "/"], answer: 0, hint: "apple以元音開頭" },
         { grade: 2, question: "'He ___ a student.' 填什麼？", options: ["is", "are", "am", "be"], answer: 0, hint: "第三人稱單數" },
         { grade: 2, question: "'Book' 的複數是？", options: ["Books", "Bookes", "Booking", "Book"], answer: 0, hint: "一般加s" },
-        { grade: 2, question: "'I like ___ (play)." 填什麼？", options: ["playing", "play", "played", "to playing"], answer: 0, hint: "like + doing" },
+        { grade: 2, question: "'I like ___ (play).' 填什麼？", options: ["playing", "play", "played", "to playing"], answer: 0, hint: "like + doing" },
         { grade: 2, question: "'Happy' 的反義詞是？", options: ["Sad", "Angry", "Tired", "Hungry"], answer: 0, hint: "不開心" },
         
         // 三年級
@@ -69,7 +69,7 @@ const QUESTION_BANK = {
         { grade: 3, question: "'She is ___ than me.' 填什麼？", options: ["taller", "tall", "tallest", "the tall"], answer: 0, hint: "比較級加-er" },
         { grade: 3, question: "'This is ___ book.' (我的) 填什麼？", options: ["my", "mine", "me", "I"], answer: 0, hint: "形容詞性物主代詞" },
         { grade: 3, question: "'There ___ a pen on the desk.' 填什麼？", options: ["is", "are", "am", "be"], answer: 0, hint: "單數用is" },
-        { grade: 3, question: "'Can you ___ (swim)?" 填什麼？", options: ["swim", "swims", "swimming", "to swim"], answer: 0, hint: "can後用原形" },
+        { grade: 3, question: "'Can you ___ (swim)?' 填什麼？", options: ["swim", "swims", "swimming", "to swim"], answer: 0, hint: "can後用原形" },
         
         // 四年級
         { grade: 4, question: "'If it rains tomorrow, I ___ at home.'", options: ["will stay", "stay", "stayed", "staying"], answer: 0, hint: "if條件句，主句用將來式" },
@@ -81,12 +81,12 @@ const QUESTION_BANK = {
         // 五年級
         { grade: 5, question: "'Hardly ___ when it began to rain.'", options: ["had I arrived", "I had arrived", "I arrived", "have I arrived"], answer: 0, hint: "Hardly...when倒裝" },
         { grade: 5, question: "'Not only he but also I ___ wrong.'", options: ["am", "is", "are", "be"], answer: 0, hint: "就近原則" },
-        { grade: 5, question: "'By next year, I ___ (graduate)."", options: ["will have graduated", "will graduate", "graduate", "graduated"], answer: 0, hint: "將來完成式" },
+        { grade: 5, question: "'By next year, I ___ (graduate).'", options: ["will have graduated", "will graduate", "graduate", "graduated"], answer: 0, hint: "將來完成式" },
         { grade: 5, question: "'Had I known earlier, I ___ (tell) you.'", options: ["would have told", "would tell", "will tell", "told"], answer: 0, hint: "與過去事實相反的虛擬" },
         { grade: 5, question: "'The sooner, ___.'", options: ["the better", "better", "the best", "best"], answer: 0, hint: "the+比較級, the+比較級" },
         
         // 六年級
-        { grade: 6, question: "'It is high time we ___ (leave)."", options: ["left", "leave", "leaving", "to leave"], answer: 0, hint: "虛擬語氣用過去式" },
+        { grade: 6, question: "'It is high time we ___ (leave).'", options: ["left", "leave", "leaving", "to leave"], answer: 0, hint: "虛擬語氣用過去式" },
         { grade: 6, question: "'___ (Judge) from his accent, he is from Guangdong.'", options: ["Judging", "Judged", "To judge", "Judge"], answer: 0, hint: "獨立主格" },
         { grade: 6, question: "'I wish I ___ (be) a bird.'", options: ["were", "was", "am", "be"], answer: 0, hint: "與現在事實相反的虛擬" },
         { grade: 6, question: "'No sooner ___ than he fell asleep.'", options: ["had he lain down", "he had lain down", "he lay down", "did he lie down"], answer: 0, hint: "No sooner...than倒裝" },
