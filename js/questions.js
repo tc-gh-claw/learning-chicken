@@ -15,7 +15,7 @@ const QUESTION_BANK = {
         
         // 二年級
         { grade: 2, question: "『蝴蝶』的正確讀音是？", options: ["hú dié", "hú diě", "hū dié", "hú dé"], answer: 0, hint: "蝴=hu2, 蝶=die2" },
-        { grade: 2, question: "『美麗』的反義詞是？", options: [「醜陋", 「難看", 「普通", 「古怪"], answer: 0, hint: "意思相反" },
+        { grade: 2, question: "『美麗』的反義詞是？", options: ["醜陋", "難看", "普通", "古怪"], answer: 0, hint: "意思相反" },
         { grade: 2, question: "『因為...所以...』是什麼關係？", options: ["因果關係", "轉折關係", "並列關係", "選擇關係"], answer: 0, hint: "一個是原因，一個是結果" },
         { grade: 2, question: "『跳』字的部首是？", options: ["足", "兆", "儿", "⻊"], answer: 0, hint: "與腳有關" },
         { grade: 2, question: "『春夏秋冬』四季的順序是？", options: ["春夏秋冬", "夏秋冬春", "春秋冬夏", "冬秋夏春"], answer: 0, hint: "春季開始" },
@@ -28,25 +28,25 @@ const QUESTION_BANK = {
         { grade: 3, question: "『曰』字的意思是？", options: ["說", "太陽", "日子", "月"], answer: 0, hint: "古文用法" },
         
         // 四年級
-        { grade: 4, question: "『比喻』這種修辭手法是？", options: ["用相似事物比擬", "把事物擬人化", "誇大事實", 「重複強調"], answer: 0, hint: "打比方" },
+        { grade: 4, question: "『比喻』這種修辭手法是？", options: ["用相似事物比擬", "把事物擬人化", "誇大事實", "重複強調"], answer: 0, hint: "打比方" },
         { grade: 4, question: "『欲窮千里目』的下一句是？", options: ["更上一層樓", "黃河入海流", "白日依山盡", "獨在異鄉為異客"], answer: 0, hint: "王之渙《登鸛雀樓》" },
         { grade: 4, question: "『雖然...但是...』是什麼關係？", options: ["轉折關係", "遞進關係", "因果關係", "並列關係"], answer: 0, hint: "前後意思相反" },
         { grade: 4, question: "『破釜沉舟』的意思是？", options: ["下定決心", "浪費資源", "做事魯莽", "準備後路"], answer: 0, hint: "比喻決心奮鬥到底" },
-        { grade: 4, question: "『狐假虎威』中的『假』字意思是？", options: ["借", 「假裝", 「虛假", 「放假"], answer: 0, hint: "借用別人的威勢" },
+        { grade: 4, question: "『狐假虎威』中的『假』字意思是？", options: ["借", "假裝", "虛假", "放假"], answer: 0, hint: "借用別人的威勢" },
         
         // 五年級
-        { grade: 5, question: "『先天下之憂而憂』是邊個的名句？", options: ["范仲淹", 「李白", 「杜甫", 「蘇軾"], answer: 0, hint: "《岳陽樓記》" },
-        { grade: 5, question: "『擬人』這種修辭手法是？", options: ["把事物人格化", "用相似事物比擬", "誇大事實", 「引用名句"], answer: 0, hint: "賦予事物人的特徵" },
-        { grade: 5, question: 「人生自古誰無死』的下一句是？", options: ["留取丹心照汗青", "化作春泥更護花", 「橫眉冷對千夫指", "我勸天公重抖擻"], answer: 0, hint: "文天祥《過零丁洋》" },
-        { grade: 5, question: 「『愚公移山』體現的精神是？", options: ["堅持不懈", "魯莽冒險", "浪費時間", 「逃避現實"], answer: 0, hint: "比喻有毅力、有恆心" },
-        { grade: 5, question: 「『之』字在文言文中常作？", options: ["助詞", "動詞", "名詞", "形容詞"], answer: 0, hint: "語氣助詞或代詞" },
+        { grade: 5, question: "『先天下之憂而憂』是邊個的名句？", options: ["范仲淹", "李白", "杜甫", "蘇軾"], answer: 0, hint: "《岳陽樓記》" },
+        { grade: 5, question: "『擬人』這種修辭手法是？", options: ["把事物人格化", "用相似事物比擬", "誇大事實", "引用名句"], answer: 0, hint: "賦予事物人的特徵" },
+        { grade: 5, question: "人生自古誰無死』的下一句是？", options: ["留取丹心照汗青", "化作春泥更護花", "橫眉冷對千夫指", "我勸天公重抖擻"], answer: 0, hint: "文天祥《過零丁洋》" },
+        { grade: 5, question: "『愚公移山』體現的精神是？", options: ["堅持不懈", "魯莽冒險", "浪費時間", "逃避現實"], answer: 0, hint: "比喻有毅力、有恆心" },
+        { grade: 5, question: "『之』字在文言文中常作？", options: ["助詞", "動詞", "名詞", "形容詞"], answer: 0, hint: "語氣助詞或代詞" },
         
         // 六年級
-        { grade: 6, question: 「『路漫漫其修遠兮』是邊個的作品？", options: ["屈原", 「李白", 「杜甫", 「蘇軾"], answer: 0, hint: "《離騷》" },
-        { grade: 6, question: 「『對偶』的特點是？", options: ["字數相等、結構相同", "意思相反", "重複強調", "層層遞進"], answer: 0, hint: "詞性、結構對稱" },
-        { grade: 6, question: 「『學而時習之』出自？", options: ["《論語》", "《孟子》", "《大學》", "《中庸》"], answer: 0, hint: "孔子語錄" },
-        { grade: 6, question: 「『襯托』這種寫作手法是？", options: ["用次要事物突出主要事物", "直接描寫", "誇張描述", "對比相反事物"], answer: 0, hint: "烘雲托月" },
-        { grade: 6, question: 「『海內存知己』的下一句是？", options: ["天涯若比鄰", "無病亦呻吟", "獨在異鄉為異客", "西出陽關無故人"], answer: 0, hint: "王勃《送杜少府之任蜀州》" }
+        { grade: 6, question: "『路漫漫其修遠兮』是邊個的作品？", options: ["屈原", "李白", "杜甫", "蘇軾"], answer: 0, hint: "《離騷》" },
+        { grade: 6, question: "『對偶』的特點是？", options: ["字數相等、結構相同", "意思相反", "重複強調", "層層遞進"], answer: 0, hint: "詞性、結構對稱" },
+        { grade: 6, question: "『學而時習之』出自？", options: ["《論語》", "《孟子》", "《大學》", "《中庸》"], answer: 0, hint: "孔子語錄" },
+        { grade: 6, question: "『襯托』這種寫作手法是？", options: ["用次要事物突出主要事物", "直接描寫", "誇張描述", "對比相反事物"], answer: 0, hint: "烘雲托月" },
+        { grade: 6, question: "『海內存知己』的下一句是？", options: ["天涯若比鄰", "無病亦呻吟", "獨在異鄉為異客", "西出陽關無故人"], answer: 0, hint: "王勃《送杜少府之任蜀州》" }
     ],
     
     english: [
@@ -149,8 +149,8 @@ const QUESTION_BANK = {
         { grade: 2, question: "地球有幾個大洋？", options: ["3個", "4個", "5個", "6個"], answer: 2, hint: "太平洋、大西洋、印度洋、南冰洋、北冰洋" },
         { grade: 2, question: "植物進行光合作用需要什麼？", options: ["陽光", "月光", "燈光", "火光"], answer: 0, hint: "太陽光" },
         { grade: 2, question: "人體有多少塊骨頭？（成人）", options: ["106塊", "206塊", "306塊", "156塊"], answer: 1, hint: "約200塊" },
-        { grade: 2, question: "中國的首都是？", options: [「上海", "北京", 「廣州", "深圳"], answer: 1, hint: "北方大城市" },
-        { grade: 2, question: "企鵝生活在？", options: [「北極", "南極", "赤道", "沙漠"], answer: 1, hint: "南極洲" },
+        { grade: 2, question: "中國的首都是？", options: ["上海", "北京", "廣州", "深圳"], answer: 1, hint: "北方大城市" },
+        { grade: 2, question: "企鵝生活在？", options: ["北極", "南極", "赤道", "沙漠"], answer: 1, hint: "南極洲" },
         
         // 三年級
         { grade: 3, question: "水的化學式是？", options: ["HO", "H₂O", "CO₂", "O₂"], answer: 1, hint: "兩個氫一個氧" },
@@ -171,13 +171,13 @@ const QUESTION_BANK = {
         { grade: 5, question: "人體有多少對染色體？", options: ["22對", "23對", "24對", "25對"], answer: 1, hint: "共46條" },
         { grade: 5, question: "牛頓發現了什麼定律？", options: ["相對論", "萬有引力", "進化論", "原子論"], answer: 1, hint: "蘋果落地的故事" },
         { grade: 5, question: "世界上最大的海洋是？", options: ["大西洋", "太平洋", "印度洋", "北冰洋"], answer: 1, hint: "面積最大的" },
-        { grade: 5, question: "人體的消化系統從哪裡開始？", options: [「胃", "口腔", 「小腸", "大腸"], answer: 1, hint: "吃東西的地方" },
+        { grade: 5, question: "人體的消化系統從哪裡開始？", options: ["胃", "口腔", "小腸", "大腸"], answer: 1, hint: "吃東西的地方" },
         
         // 六年級
-        { grade: 6, question: "原子的中心是什麼？", options: [「電子", "質子", "中子", "原子核"], answer: 3, hint: "包含質子和中子" },
+        { grade: 6, question: "原子的中心是什麼？", options: ["電子", "質子", "中子", "原子核"], answer: 3, hint: "包含質子和中子" },
         { grade: 6, question: "相對論是誰提出的？", options: ["牛頓", "愛因斯坦", "霍金", "居里夫人"], answer: 1, hint: "Albert Einstein" },
         { grade: 6, question: "地球的表層分為幾大板塊？", options: ["5個", "6個", "7個", "8個"], answer: 2, hint: "太平洋板塊、歐亞板塊等" },
-        { grade: 6, question: "元素週期表是誰發明的？", options: [「門捷列夫", "居里夫人", "道爾頓", "拉瓦錫"], answer: 0, hint: "俄國化學家" },
+        { grade: 6, question: "元素週期表是誰發明的？", options: ["門捷列夫", "居里夫人", "道爾頓", "拉瓦錫"], answer: 0, hint: "俄國化學家" },
         { grade: 6, question: "光速約為每秒多少公里？", options: ["15萬", "30萬", "45萬", "60萬"], answer: 1, hint: "299,792 km/s" }
     ]
 };
