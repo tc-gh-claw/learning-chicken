@@ -118,11 +118,17 @@ class LearningChickenGame {
 
     // ===== 開始答題 =====
     startQuiz(subject) {
-        const slot = document.querySelector(`[data-subject="${subject}"]`);
-        if (slot) {
-            effects.showButtonClick(slot);
+        try {
+            const slot = document.querySelector(`[data-subject="${subject}"]`);
+            if (slot && effects) {
+                effects.showButtonClick(slot);
+            }
+            if (soundSystem) {
+                soundSystem.playClick();
+            }
+        } catch (e) {
+            console.warn('特效/音效錯誤:', e);
         }
-        soundSystem.playClick();
         this.currentSubject = subject;
         this.currentQuestionIndex = 0;
         this.quizCorrect = 0;
