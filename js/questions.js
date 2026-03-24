@@ -189,11 +189,48 @@ function getQuestionsByGrade(subject, grade) {
 }
 
 // 輔助函數：隨機獲取指定數量的題目（混合年級）
-function getRandomQuestions(subject, count, maxGrade = 6) {
+function getRandomQuestions(subject, count, maxGrade = 6, answeredIds = []) {
+    if (!QUESTION_BANK[subject]) return [];
+    
+    // 過濾符合年級嘅題目
+    const filtered = QUESTION_BANK[subject].filter(q => q.grade <= maxGrade);
+    
+    // 為每條題目加個唯一ID（基於題目內容生成）
+    const questionsWithId = filtered.map((q, idx) => ({
+        ...q,
+        _id: `${subject}_g${q.grade}_q${idx}`
+    }));
+    
+    // 分類：未答過 vs 已答過
+    const unanswered = questionsWithId.filter(q => !answeredIds.includes(q._id));
+    const answered = questionsWithId.filter(q => answeredIds.includes(q._id));
+    
+    // 優先抽未答過嘅題
+    let selected = [];
+    
+    if (unanswered.length >= count) {
+        // 未答過嘅題夠用，隨機抽
+        const shuffled = [...unanswered].sort(() => Math.random() - 0.5);
+        selected = shuffled.slice(0, count);
+    } else {
+        // 未答過嘅題唔夠，抽晒佢哋，再從已答過嘅題補充
+        selected = [...unanswered];
+        const remaining = count - unanswered.length;
+        
+        // 已答過嘅題都洗牌
+        const shuffledAnswered = [...answered].sort(() => Math.random() - 0.5);
+        selected = [...selected, ...shuffledAnswered.slice(0, remaining)];
+    }
+    
+    // 最後再將選中嘅題洗牌，確保順序都隨機
+    return selected.sort(() => Math.random() - 0.5);
+}
+
+// 獲取所有可用題目（用於完全隨機模式）
+function getShuffledQuestions(subject, maxGrade = 6) {
     if (!QUESTION_BANK[subject]) return [];
     const filtered = QUESTION_BANK[subject].filter(q => q.grade <= maxGrade);
-    const shuffled = [...filtered].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, count);
+    return [...filtered].sort(() => Math.random() - 0.5);
 }
 
 // 科目名稱映射

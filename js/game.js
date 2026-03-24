@@ -17,13 +17,14 @@ class LearningChickenGame {
             progress: 0, // 成長值，0-20
             feeds: { chinese: 0, english: 0, math: 0, general: 0 },
             stats: { chinese: 0, english: 0, math: 0, general: 0 }, // 答對題數統計
+            answeredQuestions: { chinese: [], english: [], math: [], general: [] }, // 已答題目ID
             chicken: {
                 name: "蛋蛋",
                 stage: "egg", // egg, baby, evolved
                 evolutionId: null
             },
             unlockedEvolutions: [],
-            currentGrade: 1
+            currentGrade: 6 // 預設顯示所有年級
         };
     }
 
@@ -133,13 +134,20 @@ class LearningChickenGame {
         this.currentQuestionIndex = 0;
         this.quizCorrect = 0;
         
-        // 獲取5道題目
-        this.currentQuiz = getRandomQuestions(subject, 5, this.state.currentGrade);
+        // 獲取5道題目（傳入已答過嘅題目ID，避免重複）
+        const answeredIds = this.state.answeredQuestions[subject] || [];
+        this.currentQuiz = getRandomQuestions(subject, 5, this.state.currentGrade, answeredIds);
+        
+        // 為每條題目加ID，方便記錄
+        this.currentQuiz = this.currentQuiz.map((q, idx) => ({
+            ...q,
+            _quizId: q._id || `${subject}_q${idx}_${Date.now()}`
+        }));
         
         // 更新標題
         document.getElementById('quiz-subject-name').textContent = SUBJECT_NAMES[subject];
         document.getElementById('quiz-subject-name').style.color = this.getSubjectColor(subject);
-        document.getElementById('quiz-grade').textContent = GRADE_NAMES[this.state.currentGrade];
+        document.getElementById('quiz-grade').textContent = this.state.currentGrade >= 6 ? '混合年級' : GRADE_NAMES[this.state.currentGrade];
         
         this.showQuestion();
         this.showScreen('quiz-screen');
@@ -234,6 +242,20 @@ class LearningChickenGame {
     }
 
     finishQuiz() {
+        // 記錄已答過嘅題目ID
+        this.currentQuiz.forEach(q => {
+            if (q._id && !this.state.answeredQuestions[this.currentSubject].includes(q._id)) {
+                this.state.answeredQuestions[this.currentSubject].push(q._id);
+            }
+        });
+        
+        // 限制記錄數量，避免 localStorage 過大（每科最多記錄100條）
+        const maxHistory = 100;
+        if (this.state.answeredQuestions[this.currentSubject].length > maxHistory) {
+            this.state.answeredQuestions[this.currentSubject] = 
+                this.state.answeredQuestions[this.currentSubject].slice(-maxHistory);
+        }
+        
         // 發放飼料
         this.state.feeds[this.currentSubject] += this.quizCorrect;
         
@@ -438,6 +460,7 @@ class LearningChickenGame {
         else if (choice === '3' && confirm('確定要重置遊戲嗎？所有進度將會遺失！')) {
             localStorage.removeItem('learningChickenState');
             this.state = this.getInitialState();
+            this.state.answeredQuestions = { chinese: [], english: [], math: [], general: [] }; // 確保清空
             this.updateUI();
         }
     }
