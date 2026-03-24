@@ -307,6 +307,108 @@ h1 {
     font-size: 100px;
     z-index: 2;
     animation: chickenIdle 3s infinite ease-in-out;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.15));
+    transition: all 0.3s ease;
+}
+
+/* 雞仔眼睛閃爍效果 */
+.chicken-body::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #2D3436;
+    border-radius: 50%;
+    top: 35%;
+    left: 45%;
+    animation: blink 4s infinite;
+    opacity: 0.8;
+}
+
+@keyframes blink {
+    0%, 48%, 52%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.1); }
+}
+
+/* 不同階段的特殊效果 */
+.chicken.stage-egg .chicken-body {
+    animation: eggWiggle 4s infinite ease-in-out;
+    filter: drop-shadow(0 3px 8px rgba(255,159,67,0.3));
+}
+
+@keyframes eggWiggle {
+    0%, 100% { transform: rotate(-3deg) scale(1); }
+    25% { transform: rotate(3deg) scale(1.02); }
+    50% { transform: rotate(-3deg) scale(1); }
+    75% { transform: rotate(3deg) scale(1.02); }
+}
+
+.chicken.stage-baby .chicken-body {
+    animation: babyHop 2s infinite ease-in-out;
+    filter: drop-shadow(0 5px 12px rgba(255,214,100,0.4));
+}
+
+@keyframes babyHop {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    25% { transform: translateY(-8px) rotate(5deg); }
+    50% { transform: translateY(0) rotate(-5deg); }
+    75% { transform: translateY(-4px) rotate(5deg); }
+}
+
+.chicken.stage-evolved .chicken-body {
+    animation: evolvedFloat 3s infinite ease-in-out;
+}
+
+@keyframes evolvedFloat {
+    0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 5px 15px rgba(255,159,67,0.3)); }
+    50% { transform: translateY(-10px) scale(1.05); filter: drop-shadow(0 10px 25px rgba(255,159,67,0.5)); }
+}
+
+/* 餵食時的開心動畫 */
+.chicken.happy .chicken-body {
+    animation: happyDance 0.6s ease-in-out;
+}
+
+@keyframes happyDance {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.15) rotate(-10deg); }
+    50% { transform: scale(1.2) rotate(10deg); }
+    75% { transform: scale(1.15) rotate(-5deg); }
+}
+
+/* 愛心飄浮效果 */
+.love-particle {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp 1.5s ease-out forwards;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes floatUp {
+    0% { 
+        transform: translateY(0) scale(0.5); 
+        opacity: 1;
+    }
+    100% { 
+        transform: translateY(-60px) scale(1.2); 
+        opacity: 0;
+    }
+}
+
+/* 星星閃爍效果 */
+.star-particle {
+    position: absolute;
+    font-size: 16px;
+    animation: starTwinkle 1s ease-out forwards;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes starTwinkle {
+    0% { transform: scale(0) rotate(0deg); opacity: 1; }
+    50% { transform: scale(1.5) rotate(180deg); opacity: 1; }
+    100% { transform: scale(0) rotate(360deg); opacity: 0; }
 }
 
 @keyframes chickenIdle {
@@ -773,20 +875,47 @@ h1 {
     padding: 10px;
     box-shadow: var(--shadow);
     transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.collection-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-hover);
 }
 
 .collection-item.locked {
-    background: #F0F0F0;
-    opacity: 0.5;
+    background: linear-gradient(135deg, #F0F0F0 0%, #E8E8E8 100%);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.collection-item.locked::after {
+    content: '🔒';
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.3;
 }
 
 .collection-item.unlocked {
     border: 2px solid var(--primary);
+    animation: unlockedPulse 2s infinite;
+}
+
+@keyframes unlockedPulse {
+    0%, 100% { box-shadow: 0 4px 15px rgba(255,159,67,0.2); }
+    50% { box-shadow: 0 4px 20px rgba(255,159,67,0.4); }
 }
 
 .collection-emoji {
     font-size: 40px;
     margin-bottom: 5px;
+    transition: all 0.3s;
+}
+
+.collection-item:hover .collection-emoji {
+    transform: scale(1.1);
 }
 
 .collection-name {
@@ -794,6 +923,11 @@ h1 {
     text-align: center;
     color: var(--text);
     font-weight: 500;
+    transition: all 0.3s;
+}
+
+.collection-item:hover .collection-name {
+    font-weight: 700;
 }
 
 /* ===== 彈窗 ===== */
