@@ -100,7 +100,7 @@ body {
 }
 
 #start-screen.active {
-    display: flex;
+    display: flex !important;
 }
 
 .logo-container {
@@ -632,7 +632,7 @@ h1 {
 }
 
 #quiz-screen.active {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
 }
 
@@ -813,7 +813,7 @@ h1 {
 }
 
 #evolution-screen.active {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
 }
 
@@ -927,8 +927,9 @@ h1 {
 }
 
 /* ===== 圖鑑畫面 ===== */
+/* 注意：必須用 !important 覆蓋 .screen.active 的 display: block */
 #collection-screen.active {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
 }
 
