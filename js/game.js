@@ -1,5 +1,6 @@
 /**
- * 學習雞 - 主遊戲邏輯
+ * 星露牧場 - 主遊戲邏輯
+ * Stardew Valley風格學習遊戲
  */
 
 class LearningChickenGame {
@@ -19,7 +20,7 @@ class LearningChickenGame {
             stats: { chinese: 0, english: 0, math: 0, general: 0 }, // 答對題數統計
             answeredQuestions: { chinese: [], english: [], math: [], general: [] }, // 已答題目ID
             chicken: {
-                name: "蛋蛋",
+                name: "牧場蛋",
                 stage: "egg", // egg, baby, evolved
                 evolutionId: null
             },
@@ -29,12 +30,12 @@ class LearningChickenGame {
     }
 
     loadState() {
-        const saved = localStorage.getItem('learningChickenState');
+        const saved = localStorage.getItem('stardewRanchState');
         return saved ? JSON.parse(saved) : null;
     }
 
     saveState() {
-        localStorage.setItem('learningChickenState', JSON.stringify(this.state));
+        localStorage.setItem('stardewRanchState', JSON.stringify(this.state));
     }
 
     // ===== 畫面切換 =====
@@ -46,8 +47,10 @@ class LearningChickenGame {
     // ===== 遊戲開始 =====
     start() {
         try {
-            soundSystem.init();
-            soundSystem.unlock();
+            if (typeof soundSystem !== 'undefined') {
+                soundSystem.init();
+                soundSystem.unlock();
+            }
         } catch (e) {
             console.warn('音效初始化失敗:', e);
         }
@@ -88,32 +91,27 @@ class LearningChickenGame {
         const chickenEl = document.getElementById('chicken');
         const nameEl = document.getElementById('chicken-name');
         const titleEl = document.getElementById('chicken-title');
+        const imgEl = document.getElementById('chicken-img');
 
-        if (this.state.chicken.stage === 'egg') {
-            chickenEl.className = 'chicken stage-egg';
-            chickenEl.querySelector('.chicken-emoji').textContent = '🥚';
-            nameEl.textContent = '蛋蛋';
-            titleEl.textContent = '等待孵化...';
-        } else if (this.state.chicken.stage === 'baby') {
-            chickenEl.className = 'chicken stage-baby';
-            chickenEl.querySelector('.chicken-emoji').textContent = '🐣';
-            nameEl.textContent = '小雞';
-            titleEl.textContent = '努力學習中...';
-        } else if (this.state.chicken.stage === 'evolved') {
-            const evolution = EVOLUTIONS.find(e => e.id === this.state.chicken.evolutionId);
-            if (evolution) {
-                chickenEl.className = 'chicken stage-evolved';
-                chickenEl.querySelector('.chicken-emoji').textContent = evolution.emoji;
-                nameEl.textContent = evolution.name;
-                titleEl.textContent = evolution.description;
-                chickenEl.style.filter = `drop-shadow(0 0 20px ${evolution.color})`;
-            }
+        // 設置圖片
+        const imagePath = getChickenImage(this.state.chicken.stage, this.state.chicken.evolutionId);
+        if (imgEl) {
+            imgEl.src = imagePath;
         }
+
+        // 設置名稱和描述
+        nameEl.textContent = getChickenName(this.state.chicken.stage, this.state.chicken.evolutionId);
+        titleEl.textContent = getChickenDescription(this.state.chicken.stage, this.state.chicken.evolutionId);
+
+        // 更新階段樣式
+        chickenEl.className = `chicken stage-${this.state.chicken.stage}`;
 
         // 檢查進化條件
         const totalStats = Object.values(this.state.stats).reduce((a, b) => a + b, 0);
         if (totalStats >= 20 && this.state.chicken.stage !== 'evolved') {
             document.getElementById('evolution-glow').classList.add('active');
+        } else {
+            document.getElementById('evolution-glow').classList.remove('active');
         }
     }
 
@@ -121,10 +119,10 @@ class LearningChickenGame {
     startQuiz(subject) {
         try {
             const slot = document.querySelector(`[data-subject="${subject}"]`);
-            if (slot && effects) {
+            if (slot && typeof effects !== 'undefined') {
                 effects.showButtonClick(slot);
             }
-            if (soundSystem) {
+            if (typeof soundSystem !== 'undefined') {
                 soundSystem.playClick();
             }
         } catch (e) {
@@ -145,8 +143,9 @@ class LearningChickenGame {
         }));
         
         // 更新標題
-        document.getElementById('quiz-subject-name').textContent = SUBJECT_NAMES[subject];
-        document.getElementById('quiz-subject-name').style.color = this.getSubjectColor(subject);
+        const subjectNameEl = document.getElementById('quiz-subject-name');
+        subjectNameEl.textContent = SUBJECT_NAMES[subject];
+        subjectNameEl.style.color = this.getSubjectColor(subject);
         document.getElementById('quiz-grade').textContent = this.state.currentGrade >= 6 ? '混合年級' : GRADE_NAMES[this.state.currentGrade];
         
         this.showQuestion();
@@ -154,7 +153,12 @@ class LearningChickenGame {
     }
 
     getSubjectColor(subject) {
-        const colors = { chinese: '#FF6B6B', english: '#4ECDC4', math: '#45B7D1', general: '#96CEB4' };
+        const colors = { 
+            chinese: '#E53935', 
+            english: '#FFD54F', 
+            math: '#FF7043', 
+            general: '#43A047' 
+        };
         return colors[subject];
     }
 
@@ -198,11 +202,11 @@ class LearningChickenGame {
 
         if (isCorrect) {
             this.quizCorrect++;
-            soundSystem.playCorrect();
-            effects.showCorrect(window.innerWidth / 2, window.innerHeight / 2);
+            if (typeof soundSystem !== 'undefined') soundSystem.playCorrect();
+            if (typeof effects !== 'undefined') effects.showCorrect(window.innerWidth / 2, window.innerHeight / 2);
         } else {
-            soundSystem.playWrong();
-            effects.showWrong(window.innerWidth / 2, window.innerHeight / 2);
+            if (typeof soundSystem !== 'undefined') soundSystem.playWrong();
+            if (typeof effects !== 'undefined') effects.showWrong(window.innerWidth / 2, window.innerHeight / 2);
         }
 
         // 顯示結果
@@ -218,13 +222,15 @@ class LearningChickenGame {
         const rewardEl = document.getElementById('result-reward');
 
         if (isCorrect) {
-            iconEl.textContent = '✅';
+            iconEl.innerHTML = `<img src="assets/images/ui_star.png" alt="答對" style="width: 100%; height: 100%;">`;
             textEl.textContent = '答對了！';
-            rewardEl.textContent = `獲得 ${SUBJECT_ICONS[this.currentSubject]} ${SUBJECT_NAMES[this.currentSubject]}飼料 x1`;
+            textEl.style.color = '#27AE60';
+            rewardEl.innerHTML = `獲得 <img src="assets/images/crop_${this.currentSubject}.png" style="width: 24px; height: 24px; vertical-align: middle;"> ${SUBJECT_NAMES[this.currentSubject]}作物 x1`;
         } else {
-            iconEl.textContent = '❌';
+            iconEl.innerHTML = `<span style="font-size: 60px;">💭</span>`;
             textEl.textContent = '答錯了...';
-            rewardEl.textContent = '再接再厲！';
+            textEl.style.color = '#E74C3C';
+            rewardEl.textContent = '再接再厲！下次一定行！';
         }
 
         resultDiv.style.display = 'flex';
@@ -260,8 +266,8 @@ class LearningChickenGame {
         this.state.feeds[this.currentSubject] += this.quizCorrect;
         
         if (this.quizCorrect > 0) {
-            soundSystem.playFeedGet();
-            effects.showFeedGet(window.innerWidth / 2, window.innerHeight / 3);
+            if (typeof soundSystem !== 'undefined') soundSystem.playFeedGet();
+            if (typeof effects !== 'undefined') effects.showFeedGet(window.innerWidth / 2, window.innerHeight / 3);
         }
         
         // 統計答對題數（用於進化計算）
@@ -308,7 +314,7 @@ class LearningChickenGame {
 
         // 餵食動畫
         this.showFeedAnimation();
-        soundSystem.playFeed();
+        if (typeof soundSystem !== 'undefined') soundSystem.playFeed();
 
         // 檢查進化
         if (this.state.progress >= 20 && this.state.chicken.stage !== 'evolved') {
@@ -327,19 +333,16 @@ class LearningChickenGame {
     showFeedAnimation() {
         const container = document.getElementById('chicken-container');
         const chicken = document.getElementById('chicken');
-        const chickenBody = chicken.querySelector('.chicken-body');
         
         // 添加開心跳躍動畫
         chicken.classList.add('happy');
         setTimeout(() => chicken.classList.remove('happy'), 600);
         
         // 創建愛心粒子
-        const hearts = ['❤️', '🧡', '💛', '💚', '💙', '💜'];
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
                 const heart = document.createElement('div');
                 heart.className = 'love-particle';
-                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                 heart.style.left = `${45 + Math.random() * 10}%`;
                 heart.style.top = `${40 + Math.random() * 10}%`;
                 heart.style.animationDelay = `${Math.random() * 0.3}s`;
@@ -349,12 +352,10 @@ class LearningChickenGame {
         }
         
         // 創建星星粒子
-        const stars = ['⭐', '✨', '🌟', '💫'];
         for (let i = 0; i < 4; i++) {
             setTimeout(() => {
                 const star = document.createElement('div');
                 star.className = 'star-particle';
-                star.textContent = stars[Math.floor(Math.random() * stars.length)];
                 const angle = (i / 4) * Math.PI * 2;
                 const distance = 30 + Math.random() * 20;
                 star.style.left = `${50 + Math.cos(angle) * 15}%`;
@@ -365,10 +366,12 @@ class LearningChickenGame {
         }
         
         // 粒子特效
-        effects.showFeedGet(
-            container.getBoundingClientRect().left + container.offsetWidth / 2,
-            container.getBoundingClientRect().top + container.offsetHeight / 2
-        );
+        if (typeof effects !== 'undefined') {
+            effects.showFeedGet(
+                container.getBoundingClientRect().left + container.offsetWidth / 2,
+                container.getBoundingClientRect().top + container.offsetHeight / 2
+            );
+        }
     }
 
     // ===== 進化 =====
@@ -376,26 +379,31 @@ class LearningChickenGame {
         const statsDiv = document.getElementById('evolution-stats');
         statsDiv.innerHTML = `
             <div class="stat-row">
-                📝 中文: ${this.state.stats.chinese} 題
+                <img src="assets/images/crop_chinese.png" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"> 中文: ${this.state.stats.chinese} 題
             </div>
             <div class="stat-row">
-                🔤 英文: ${this.state.stats.english} 題  
+                <img src="assets/images/crop_english.png" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"> 英文: ${this.state.stats.english} 題  
             </div>
             <div class="stat-row">
-                🔢 數學: ${this.state.stats.math} 題
+                <img src="assets/images/crop_math.png" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"> 數學: ${this.state.stats.math} 題
             </div>
             <div class="stat-row">
-                🌍 常識: ${this.state.stats.general} 題
+                <img src="assets/images/crop_general.png" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"> 常識: ${this.state.stats.general} 題
             </div>
         `;
 
-        document.getElementById('evo-old').textContent = this.state.chicken.stage === 'egg' ? '🥚' : '🐣';
+        // 設置舊形態圖片
+        const oldImg = document.querySelector('#evo-old img');
+        if (oldImg) {
+            oldImg.src = getChickenImage(this.state.chicken.stage, this.state.chicken.evolutionId);
+        }
         document.getElementById('evo-new').classList.add('hidden');
     }
 
     performEvolution() {
-        soundSystem.playEvolution();
-        effects.showEvolution(window.innerWidth / 2, window.innerHeight / 2);
+        if (typeof soundSystem !== 'undefined') soundSystem.playEvolution();
+        if (typeof effects !== 'undefined') effects.showEvolution(window.innerWidth / 2, window.innerHeight / 2);
+        
         const evolution = calculateEvolution(this.state.stats);
         
         if (evolution) {
@@ -410,7 +418,10 @@ class LearningChickenGame {
 
             // 顯示新形態
             const newEl = document.getElementById('evo-new');
-            newEl.textContent = evolution.emoji;
+            const newImg = newEl.querySelector('img');
+            if (newImg) {
+                newImg.src = evolution.image;
+            }
             newEl.classList.remove('hidden');
 
             // 顯示結果彈窗
@@ -423,10 +434,13 @@ class LearningChickenGame {
     }
 
     showEvolutionResult(evolution) {
-        document.getElementById('result-chicken-emoji').textContent = evolution.emoji;
+        const resultImg = document.querySelector('#result-chicken-emoji img');
+        if (resultImg) {
+            resultImg.src = evolution.image;
+        }
         document.getElementById('result-chicken-name').textContent = evolution.name;
         document.getElementById('result-chicken-title').textContent = evolution.description;
-        document.getElementById('result-description').textContent = `恭喜！你的學習雞進化成「${evolution.name}」！`;
+        document.getElementById('result-description').textContent = `恭喜！你的牧場雞進化成「${evolution.name}」！`;
         
         const badgesDiv = document.getElementById('result-badges');
         badgesDiv.innerHTML = `<span class="badge" style="background: ${evolution.color}">${evolution.badge}</span>`;
@@ -455,16 +469,24 @@ class LearningChickenGame {
             const unlocked = this.state.unlockedEvolutions.includes(evo.id);
             const item = document.createElement('div');
             item.className = `collection-item ${unlocked ? 'unlocked' : 'locked'}`;
-            item.style.cssText = unlocked ? `
-                background: linear-gradient(135deg, ${evo.color}20, ${evo.color}05);
-                border: 2px solid ${evo.color}40;
-                box-shadow: 0 4px 15px ${evo.color}30;
-            ` : '';
+            
+            if (unlocked) {
+                item.style.cssText = `
+                    background: linear-gradient(135deg, ${evo.color}20, ${evo.color}05);
+                    border: 2px solid ${evo.color}40;
+                    box-shadow: 0 4px 15px ${evo.color}30;
+                `;
+            }
+            
             item.innerHTML = `
-                <div class="collection-emoji" style="font-size: ${unlocked ? '40px' : '32px'}; filter: ${unlocked ? 'none' : 'grayscale(100%)'};">${unlocked ? evo.emoji : '❓'}</div>
+                <div class="collection-emoji" style="${unlocked ? '' : 'filter: grayscale(100%);'}">
+                    <img src="${unlocked ? evo.image : 'assets/images/chicken_egg.png'}" alt="${unlocked ? evo.name : '???'}" 
+                         style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
                 <div class="collection-name" style="color: ${unlocked ? evo.color : '#999'};">${unlocked ? evo.name : '???'}</div>
                 ${unlocked ? `<div style="position: absolute; top: 5px; right: 5px; font-size: 12px;">✓</div>` : ''}
             `;
+            
             if (unlocked) {
                 item.onclick = () => this.showEvolutionDetail(evo);
             }
@@ -480,17 +502,19 @@ class LearningChickenGame {
         modal.className = 'modal active';
         modal.innerHTML = `
             <div class="modal-content evolution-detail-modal" style="max-width: 320px;">
-                <div style="font-size: 80px; margin-bottom: 10px;">${evolution.emoji}</div>
+                <div style="width: 80px; height: 80px; margin: 0 auto 10px;">
+                    <img src="${evolution.image}" style="width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));">
+                </div>
                 <h2 style="color: ${evolution.color}; margin-bottom: 5px;">${evolution.name}</h2>
                 <p style="color: #636E72; font-size: 14px; margin-bottom: 15px;">${evolution.description}</p>
                 <div class="badge" style="background: ${evolution.color}; display: inline-block; margin-bottom: 15px; padding: 6px 16px; border-radius: 20px; color: white; font-weight: bold;">${evolution.badge}</div>
                 <div style="background: #F8F9FA; padding: 12px; border-radius: 12px; margin-bottom: 15px; text-align: left;">
                     <div style="font-size: 12px; color: #636E72; margin-bottom: 8px;">📊 進化條件：</div>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 13px;">
-                        <div>📝 中文: ${this.state.stats.chinese} 題</div>
-                        <div>🔤 英文: ${this.state.stats.english} 題</div>
-                        <div>🔢 數學: ${this.state.stats.math} 題</div>
-                        <div>🌍 常識: ${this.state.stats.general} 題</div>
+                        <div><img src="assets/images/crop_chinese.png" style="width: 16px; height: 16px; vertical-align: middle;"> 中文: ${this.state.stats.chinese} 題</div>
+                        <div><img src="assets/images/crop_english.png" style="width: 16px; height: 16px; vertical-align: middle;"> 英文: ${this.state.stats.english} 題</div>
+                        <div><img src="assets/images/crop_math.png" style="width: 16px; height: 16px; vertical-align: middle;"> 數學: ${this.state.stats.math} 題</div>
+                        <div><img src="assets/images/crop_general.png" style="width: 16px; height: 16px; vertical-align: middle;"> 常識: ${this.state.stats.general} 題</div>
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="this.closest('.modal').remove()" style="width: 100%;">關閉</button>
@@ -506,8 +530,7 @@ class LearningChickenGame {
 
     // ===== 菜單 =====
     toggleMenu() {
-        const menuItems = ['圖鑑', '設置', '重置遊戲'];
-        const choice = prompt('選擇功能：\n1. 圖鑑\n2. 設置\n3. 重置遊戲');
+        const choice = prompt('選擇功能：\n1. 圖鑑\n2. 設置\n3. 重置遊戲\n\n(輸入數字 1-3)');
         
         if (choice === '1') this.showCollection();
         else if (choice === '3' && confirm('確定要重置遊戲嗎？⚠️ 遊戲進度會重置，但已收集的圖鑑會保留！')) {
@@ -515,7 +538,7 @@ class LearningChickenGame {
             const preservedCollection = this.state.unlockedEvolutions || [];
             
             // 重置遊戲
-            localStorage.removeItem('learningChickenState');
+            localStorage.removeItem('stardewRanchState');
             this.state = this.getInitialState();
             
             // 恢復圖鑑

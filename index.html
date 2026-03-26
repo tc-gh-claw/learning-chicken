@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🐔 學習雞 - 養成你的知識夥伴</title>
+    <title>🌾 星露牧場 - 養成你的知識夥伴</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
     <div id="app">
         <!-- 啟動畫面 -->
         <div id="start-screen" class="screen active">
             <div class="logo-container">
-                <div class="chicken-logo">🐣</div>
-                <h1>學習雞</h1>
-                <p class="tagline">答題養成 · 知識進化</p>
+                <div class="chicken-logo">
+                    <img src="assets/images/chicken_basic.png" alt="星露牧場">
+                </div>
+                <h1>星露牧場</h1>
+                <p class="tagline">答題種植 · 牧場養成</p>
             </div>
             <div class="start-buttons">
                 <button class="btn btn-primary" onclick="game.start()">🎮 開始遊戲</button>
                 <button class="btn btn-secondary" onclick="game.showTutorial()">📖 遊戲說明</button>
             </div>
-            <div class="version">v1.0.0</div>
+            <div class="version">v2.0 - Stardew風格</div>
         </div>
 
         <!-- 主遊戲畫面 -->
@@ -40,71 +42,82 @@
 
             <!-- 雞舍場景 -->
             <div class="chicken-house">
-                <div class="scene-background">
-                    <div class="clouds">☁️ ☁️ ☁️</div>
-                    <div class="sun">☀️</div>
-                </div>
-                
                 <!-- 學習雞 -->
                 <div id="chicken-container" class="chicken-container">
                     <div id="chicken" class="chicken stage-egg">
                         <div class="chicken-body">
-                            <span class="chicken-emoji">🥚</span>
+                            <img id="chicken-img" src="assets/images/chicken_egg.png" alt="牧場蛋">
                         </div>
                         <div class="chicken-shadow"></div>
                         <div class="evolution-glow" id="evolution-glow"></div>
                     </div>
-                    <div class="chicken-name" id="chicken-name">蛋蛋</div>
+                    <div class="chicken-name" id="chicken-name">牧場蛋</div>
                     <div class="chicken-title" id="chicken-title">等待孵化...</div>
                 </div>
 
                 <!-- 飼料槽 -->
                 <div class="feed-slots">
                     <div class="feed-slot" data-subject="chinese" onclick="game.startQuiz('chinese')">
-                        <span class="feed-icon">📝</span>
+                        <span class="feed-icon">
+                            <img src="assets/images/crop_chinese.png" alt="稻米">
+                        </span>
                         <span class="feed-count" id="feed-chinese">0</span>
-                        <span class="feed-label">中文飼料</span>
+                        <span class="feed-label">中文稻米</span>
                     </div>
                     <div class="feed-slot" data-subject="english" onclick="game.startQuiz('english')">
-                        <span class="feed-icon">🔤</span>
+                        <span class="feed-icon">
+                            <img src="assets/images/crop_english.png" alt="玉米">
+                        </span>
                         <span class="feed-count" id="feed-english">0</span>
-                        <span class="feed-label">英文飼料</span>
+                        <span class="feed-label">英文玉米</span>
                     </div>
                     <div class="feed-slot" data-subject="math" onclick="game.startQuiz('math')">
-                        <span class="feed-icon">🔢</span>
+                        <span class="feed-icon">
+                            <img src="assets/images/crop_math.png" alt="蘿蔔">
+                        </span>
                         <span class="feed-count" id="feed-math">0</span>
-                        <span class="feed-label">數學飼料</span>
+                        <span class="feed-label">數學蘿蔔</span>
                     </div>
                     <div class="feed-slot" data-subject="general" onclick="game.startQuiz('general')">
-                        <span class="feed-icon">🌍</span>
+                        <span class="feed-icon">
+                            <img src="assets/images/crop_general.png" alt="番茄">
+                        </span>
                         <span class="feed-count" id="feed-general">0</span>
-                        <span class="feed-label">常識飼料</span>
+                        <span class="feed-label">常識番茄</span>
                     </div>
                 </div>
 
                 <!-- 餵食按鈕 -->
                 <button id="feed-btn" class="btn btn-feed" onclick="game.feedChicken()" disabled>
-                    🍽️ 餵食學習雞
+                    🌱 餵食牧場雞
                 </button>
-                <p class="feed-hint">選擇科目答題獲得飼料</p>
+                <p class="feed-hint">選擇科目答題獲得作物</p>
             </div>
 
             <!-- 科目統計 -->
             <div class="subject-stats">
                 <div class="stat-item">
-                    <span class="stat-icon">📝</span>
+                    <span class="stat-icon">
+                        <img src="assets/images/crop_chinese.png" alt="中文">
+                    </span>
                     <span class="stat-value" id="stat-chinese">0</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-icon">🔤</span>
+                    <span class="stat-icon">
+                        <img src="assets/images/crop_english.png" alt="英文">
+                    </span>
                     <span class="stat-value" id="stat-english">0</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-icon">🔢</span>
+                    <span class="stat-icon">
+                        <img src="assets/images/crop_math.png" alt="數學">
+                    </span>
                     <span class="stat-value" id="stat-math">0</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-icon">🌍</span>
+                    <span class="stat-icon">
+                        <img src="assets/images/crop_general.png" alt="常識">
+                    </span>
                     <span class="stat-value" id="stat-general">0</span>
                 </div>
             </div>
@@ -132,9 +145,11 @@
             </div>
 
             <div class="quiz-result" id="quiz-result" style="display: none;">
-                <div class="result-icon" id="result-icon">✅</div>
+                <div class="result-icon" id="result-icon">
+                    <img src="assets/images/ui_star.png" alt="結果">
+                </div>
                 <div class="result-text" id="result-text">答對了！</div>
-                <div class="result-reward" id="result-reward">獲得 📝 中文飼料 x1</div>
+                <div class="result-reward" id="result-reward">獲得 中文稻米 x1</div>
                 <button class="btn btn-primary" onclick="game.nextQuestion()">下一題</button>
             </div>
         </div>
@@ -143,16 +158,20 @@
         <div id="evolution-screen" class="screen">
             <div class="evolution-scene">
                 <h2 class="evolution-title">✨ 進化時刻 ✨</h2>
-                <p class="evolution-subtitle">你的學習雞準備進化了！</p>
+                <p class="evolution-subtitle">你的牧場雞準備進化了！</p>
                 
                 <div class="evolution-animation">
-                    <div id="evo-old" class="evo-chicken">🥚</div>
+                    <div id="evo-old" class="evo-chicken">
+                        <img src="assets/images/chicken_egg.png" alt="舊形態">
+                    </div>
                     <div class="evo-effects">
                         <span class="sparkle">✨</span>
                         <span class="sparkle">⭐</span>
                         <span class="sparkle">🌟</span>
                     </div>
-                    <div id="evo-new" class="evo-chicken hidden">?</div>
+                    <div id="evo-new" class="evo-chicken hidden">
+                        <img src="assets/images/chicken_basic.png" alt="新形態">
+                    </div>
                 </div>
 
                 <div class="evolution-stats" id="evolution-stats">
@@ -169,7 +188,7 @@
         <div id="collection-screen" class="screen">
             <header class="screen-header">
                 <button class="btn-back" onclick="game.backToMain()">←</button>
-                <h2>🐔 學習雞圖鑑</h2>
+                <h2>🐔 牧場雞圖鑑</h2>
                 <span class="collection-count"><span id="collected">0</span>/30</span>
             </header>
             
@@ -195,15 +214,15 @@
                 <div class="tutorial-content">
                     <div class="tutorial-step">
                         <span class="step-num">1</span>
-                        <p><strong>選擇科目</strong><br>點擊飼料槽選擇科目答題</p>
+                        <p><strong>選擇作物</strong><br>點擊作物槽選擇科目答題</p>
                     </div>
                     <div class="tutorial-step">
                         <span class="step-num">2</span>
-                        <p><strong>答對獲飼料</strong><br>答對題目獲得對應科目飼料</p>
+                        <p><strong>答對收穫</strong><br>答對題目獲得對應作物</p>
                     </div>
                     <div class="tutorial-step">
                         <span class="step-num">3</span>
-                        <p><strong>餵食成長</strong><br>用飼料餵食學習雞提升成長值</p>
+                        <p><strong>餵食成長</strong><br>用作物餵食牧場雞提升成長值</p>
                     </div>
                     <div class="tutorial-step">
                         <span class="step-num">4</span>
@@ -211,7 +230,7 @@
                     </div>
                     <div class="tutorial-step">
                         <span class="step-num">5</span>
-                        <p><strong>30種形態</strong><br>根據答題表現進化成不同形態</p>
+                        <p><strong>30種形態</strong><br>根據答題表現進化成不同牧場雞</p>
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="game.closeModal()">知道了！</button>
@@ -221,8 +240,10 @@
         <!-- 進化結果彈窗 -->
         <div id="evolution-result-modal" class="modal">
             <div class="modal-content evolution-result">
-                <div class="result-chicken" id="result-chicken-emoji">🐔</div>
-                <h2 id="result-chicken-name">學習雞</h2>
+                <div class="result-chicken" id="result-chicken-emoji">
+                    <img src="assets/images/chicken_basic.png" alt="進化結果">
+                </div>
+                <h2 id="result-chicken-name">牧場雞</h2>
                 <p id="result-chicken-title">基礎形態</p>
                 <div class="result-description" id="result-description">
                     一隻熱愛學習的小雞
@@ -235,10 +256,10 @@
         </div>
     </div>
 
-    <script src="js/questions.js?v=3"></script>
-    <script src="js/evolutions.js?v=3"></script>
-    <script src="js/sound.js?v=3"></script>
-    <script src="js/effects.js?v=3"></script>
-    <script src="js/game.js?v=3"></script>
+    <script src="js/questions.js?v=4"></script>
+    <script src="js/evolutions.js?v=4"></script>
+    <script src="js/sound.js?v=4"></script>
+    <script src="js/effects.js?v=4"></script>
+    <script src="js/game.js?v=4"></script>
 </body>
 </html>

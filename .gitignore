@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+package-lock.json
+package.json
+
+# Build scripts
+generate-assets.js
+generate-preview.js
+
+# Design docs
+STARDEW_DESIGN.md
+PREVIEW.png
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log

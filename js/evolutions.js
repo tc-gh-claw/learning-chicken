@@ -1,15 +1,16 @@
 /**
- * 學習雞 - 進化系統
- * 30種進化形態定義
+ * 星露牧場 - 進化系統
+ * 30種牧場雞進化形態 - Stardew Valley風格
  */
 
 const EVOLUTIONS = [
     // ========== 全能型 (5種) ==========
     {
         id: "all_round_master",
-        name: "全能學霸雞",
-        emoji: "🎓",
-        description: "五育並重，德智體群美全面發展",
+        name: "黃金冠軍雞",
+        emoji: "🥇",
+        image: "assets/images/evo_all_round_master.png",
+        description: "五育並重，德智體群美全面發展的牧場之星",
         condition: (stats) => stats.chinese >= 4 && stats.english >= 4 && stats.math >= 4 && stats.general >= 4,
         type: "balanced",
         color: "#FFD700",
@@ -17,9 +18,10 @@ const EVOLUTIONS = [
     },
     {
         id: "knowledge_sage",
-        name: "知識博學雞",
+        name: "智慧智者雞",
         emoji: "📚",
-        description: "博覽群書，涉獵廣泛",
+        image: "assets/images/evo_knowledge_sage.png",
+        description: "博覽群書，在牧場圖書館度過無數個日夜",
         condition: (stats) => stats.chinese >= 3 && stats.english >= 3 && stats.math >= 3 && stats.general >= 3,
         type: "balanced",
         color: "#9B59B6",
@@ -27,9 +29,10 @@ const EVOLUTIONS = [
     },
     {
         id: "rising_star",
-        name: "潛力新星雞",
+        name: "閃耀新星雞",
         emoji: "⭐",
-        description: "潛力無限，後勁十足",
+        image: "assets/images/evo_rising_star.png",
+        description: "牧場上最耀眼的新星，潛力無限",
         condition: (stats) => stats.chinese >= 2 && stats.english >= 2 && stats.math >= 2 && stats.general >= 2,
         type: "balanced",
         color: "#3498DB",
@@ -37,9 +40,10 @@ const EVOLUTIONS = [
     },
     {
         id: "steady_developer",
-        name: "平均發展雞",
-        emoji: "⚖️",
-        description: "穩扎穩打，步步為營",
+        name: "穩健農夫雞",
+        emoji: "🌾",
+        image: "assets/images/chicken_basic.png",
+        description: "穩扎穩打，像耕田一樣步步為營",
         condition: (stats) => stats.chinese >= 1 && stats.english >= 1 && stats.math >= 1 && stats.general >= 1,
         type: "balanced",
         color: "#95A5A6",
@@ -47,9 +51,10 @@ const EVOLUTIONS = [
     },
     {
         id: "all_rounder_star",
-        name: "全才之星雞",
+        name: "雙星牧場雞",
         emoji: "🌟",
-        description: "雙領域專精的全方位人才",
+        image: "assets/images/evo_rising_star.png",
+        description: "雙領域專精的全方位牧場人才",
         condition: (stats) => {
             const sorted = Object.values(stats).sort((a, b) => b - a);
             return sorted[0] >= 5 && sorted[1] >= 5;
@@ -62,9 +67,10 @@ const EVOLUTIONS = [
     // ========== 數學型 (4種) ==========
     {
         id: "math_genius",
-        name: "數學天才雞",
+        name: "計算大師雞",
         emoji: "🔢",
-        description: "數理邏輯超人一等",
+        image: "assets/images/evo_math_genius.png",
+        description: "數理邏輯超人一等，牧場的會計師",
         condition: (stats) => stats.math >= 10,
         type: "math",
         color: "#2980B9",
@@ -72,9 +78,10 @@ const EVOLUTIONS = [
     },
     {
         id: "calculation_master",
-        name: "計算大師雞",
+        name: "算盤達人雞",
         emoji: "🧮",
-        description: "速算能力驚人",
+        image: "assets/images/evo_calculation_master.png",
+        description: "速算能力驚人，算收成從不出錯",
         condition: (stats) => stats.math >= 7 && stats.chinese < 4 && stats.english < 4,
         type: "math",
         color: "#1ABC9C",
@@ -82,9 +89,10 @@ const EVOLUTIONS = [
     },
     {
         id: "geometry_expert",
-        name: "幾何專家雞",
+        name: "測量專家雞",
         emoji: "📐",
-        description: "空間感與邏輯並重",
+        image: "assets/images/evo_geometry_expert.png",
+        description: "空間感與邏輯並重，規劃農地最拿手",
         condition: (stats) => stats.math >= 5 && stats.general >= 3,
         type: "math",
         color: "#16A085",
@@ -92,9 +100,10 @@ const EVOLUTIONS = [
     },
     {
         id: "logic_thinker",
-        name: "邏輯思維雞",
+        name: "邏輯思考雞",
         emoji: "🧩",
-        description: "邏輯推理能力強",
+        image: "assets/images/evo_logic_thinker.png",
+        description: "邏輯推理能力強，解決牧場難題的高手",
         condition: (stats) => stats.math >= 5 && stats.chinese >= 3,
         type: "math",
         color: "#27AE60",
@@ -104,9 +113,10 @@ const EVOLUTIONS = [
     // ========== 語文型 (4種) ==========
     {
         id: "chinese_master",
-        name: "語文大師雞",
+        name: "詩人墨客雞",
         emoji: "📝",
-        description: "詩詞歌賦無所不能",
+        image: "assets/images/evo_chinese_master.png",
+        description: "詩詞歌賦無所不能，牧場的文學家",
         condition: (stats) => stats.chinese >= 10,
         type: "chinese",
         color: "#E74C3C",
@@ -116,7 +126,8 @@ const EVOLUTIONS = [
         id: "literary_talent",
         name: "文學才子雞",
         emoji: "📖",
-        description: "文采飛揚，妙筆生花",
+        image: "assets/images/evo_literary_talent.png",
+        description: "文采飛揚，妙筆生花，日記寫得最好",
         condition: (stats) => stats.chinese >= 7 && stats.math < 4 && stats.english < 4,
         type: "chinese",
         color: "#C0392B",
@@ -124,9 +135,10 @@ const EVOLUTIONS = [
     },
     {
         id: "bilingual_elite",
-        name: "雙語精英雞",
+        name: "雙語翻譯雞",
         emoji: "🌏",
-        description: "中英文雙語俱佳",
+        image: "assets/images/evo_bilingual_elite.png",
+        description: "中英文雙語俱佳，接待外國遊客沒問題",
         condition: (stats) => stats.chinese >= 5 && stats.english >= 5,
         type: "chinese",
         color: "#F39C12",
@@ -134,9 +146,10 @@ const EVOLUTIONS = [
     },
     {
         id: "reading_expert",
-        name: "閱讀理解雞",
+        name: "閱讀愛好雞",
         emoji: "👓",
-        description: "閱讀理解能力強",
+        image: "assets/images/evo_reading_expert.png",
+        description: "閱讀理解能力強，牧場圖書館的常客",
         condition: (stats) => stats.chinese >= 5 && stats.general >= 3,
         type: "chinese",
         color: "#D35400",
@@ -148,7 +161,8 @@ const EVOLUTIONS = [
         id: "english_fluent",
         name: "英文流利雞",
         emoji: "🔤",
-        description: "英語說寫讀聽樣樣精通",
+        image: "assets/images/evo_english_fluent.png",
+        description: "英語說寫讀聽樣樣精通，國際化牧場雞",
         condition: (stats) => stats.english >= 10,
         type: "english",
         color: "#8E44AD",
@@ -158,7 +172,8 @@ const EVOLUTIONS = [
         id: "language_expert",
         name: "外語達人雞",
         emoji: "🗣️",
-        description: "語言天賦異稟",
+        image: "assets/images/evo_language_expert.png",
+        description: "語言天賦異稟，會說多國語言",
         condition: (stats) => stats.english >= 7 && stats.chinese < 4 && stats.math < 4,
         type: "english",
         color: "#9B59B6",
@@ -168,7 +183,8 @@ const EVOLUTIONS = [
         id: "international_view",
         name: "國際視野雞",
         emoji: "🌐",
-        description: "具備國際觀的知識份子",
+        image: "assets/images/evo_international_view.png",
+        description: "具備國際觀的知識份子，環遊世界的夢想家",
         condition: (stats) => stats.english >= 5 && stats.general >= 5,
         type: "english",
         color: "#7D3C98",
@@ -178,7 +194,8 @@ const EVOLUTIONS = [
         id: "translation_expert",
         name: "翻譯專家雞",
         emoji: "📚",
-        description: "中英互譯能力強",
+        image: "assets/images/evo_translation_expert.png",
+        description: "中英互譯能力強，牧場的官方翻譯",
         condition: (stats) => stats.english >= 5 && stats.chinese >= 3,
         type: "english",
         color: "#A569BD",
@@ -188,9 +205,10 @@ const EVOLUTIONS = [
     // ========== 常識型 (4種) ==========
     {
         id: "general_knowledge_master",
-        name: "常識達人雞",
+        name: "百科全書雞",
         emoji: "🌍",
-        description: "生活知識百事通",
+        image: "assets/images/evo_general_knowledge_master.png",
+        description: "生活知識百事通，牧場的智多星",
         condition: (stats) => stats.general >= 10,
         type: "general",
         color: "#27AE60",
@@ -198,9 +216,10 @@ const EVOLUTIONS = [
     },
     {
         id: "science_explorer",
-        name: "科學探索雞",
+        name: "科學實驗雞",
         emoji: "🔬",
-        description: "科學素養深厚",
+        image: "assets/images/evo_science_explorer.png",
+        description: "科學素養深厚，喜歡研究農作物",
         condition: (stats) => stats.general >= 7 && stats.math >= 3,
         type: "general",
         color: "#229954",
@@ -208,9 +227,10 @@ const EVOLUTIONS = [
     },
     {
         id: "geography_expert",
-        name: "地理專家雞",
+        name: "地理導遊雞",
         emoji: "🗺️",
-        description: "人文地理知識豐富",
+        image: "assets/images/evo_geography_expert.png",
+        description: "人文地理知識豐富，知道哪裡土壤最好",
         condition: (stats) => stats.general >= 5 && stats.chinese >= 3,
         type: "general",
         color: "#1E8449",
@@ -220,7 +240,8 @@ const EVOLUTIONS = [
         id: "nature_observer",
         name: "自然觀察雞",
         emoji: "🌿",
-        description: "自然科學與外語並重",
+        image: "assets/images/evo_nature_observer.png",
+        description: "自然科學與外語並重，熱愛觀察生態",
         condition: (stats) => stats.general >= 5 && stats.english >= 3,
         type: "general",
         color: "#52BE80",
@@ -230,9 +251,10 @@ const EVOLUTIONS = [
     // ========== 趣味/彩蛋型 (9種) ==========
     {
         id: "adventurous_imbalanced",
-        name: "偏科冒險雞",
+        name: "冒險探險雞",
         emoji: "🎲",
-        description: "大膽冒險的偏科勇士",
+        image: "assets/images/evo_adventurous_imbalanced.png",
+        description: "大膽冒險的偏科勇士，喜歡探索未知領域",
         condition: (stats) => {
             const values = Object.values(stats);
             const max = Math.max(...values);
@@ -245,9 +267,10 @@ const EVOLUTIONS = [
     },
     {
         id: "liberal_arts_chicken",
-        name: "文科小雞",
+        name: "藝術畫家雞",
         emoji: "📜",
-        description: "文科能力超強",
+        image: "assets/images/evo_liberal_arts_chicken.png",
+        description: "文科能力超強，畫得一手好畫",
         condition: (stats) => stats.chinese + stats.english >= 12,
         type: "special",
         color: "#D35400",
@@ -255,9 +278,10 @@ const EVOLUTIONS = [
     },
     {
         id: "science_warrior",
-        name: "理科戰士雞",
+        name: "科學戰士雞",
         emoji: "⚔️",
-        description: "理科思維敏銳",
+        image: "assets/images/evo_science_warrior.png",
+        description: "理科思維敏銳，像戰士一樣精確",
         condition: (stats) => stats.math + stats.general >= 12,
         type: "special",
         color: "#2C3E50",
@@ -267,7 +291,8 @@ const EVOLUTIONS = [
         id: "language_master",
         name: "語言大師雞",
         emoji: "💬",
-        description: "語言天才",
+        image: "assets/images/evo_language_master.png",
+        description: "語言天才，牧場的溝通專家",
         condition: (stats) => stats.chinese + stats.english >= 10 && stats.math + stats.general <= 5,
         type: "special",
         color: "#8E44AD",
@@ -275,9 +300,10 @@ const EVOLUTIONS = [
     },
     {
         id: "science_geek",
-        name: "科學怪雞",
+        name: "科學怪咖雞",
         emoji: "🧪",
-        description: "科學狂熱份子",
+        image: "assets/images/evo_science_geek.png",
+        description: "科學狂熱份子，總是做奇怪的實驗",
         condition: (stats) => stats.math + stats.general >= 10 && stats.chinese + stats.english <= 5,
         type: "special",
         color: "#16A085",
@@ -287,7 +313,8 @@ const EVOLUTIONS = [
         id: "last_minute",
         name: "臨時抱佛腳雞",
         emoji: "⏰",
-        description: "考試前的奇蹟",
+        image: "assets/images/evo_last_minute.png",
+        description: "考試前的奇蹟，總是最後一刻爆發",
         condition: (stats) => {
             const values = Object.values(stats);
             return values.some(v => v === 20) && values.filter(v => v === 0).length === 3;
@@ -298,9 +325,10 @@ const EVOLUTIONS = [
     },
     {
         id: "extreme_imbalanced",
-        name: "偏科奇才雞",
+        name: "彩虹偏科雞",
         emoji: "🌈",
-        description: "嚴重偏科的特異人才",
+        image: "assets/images/evo_extreme_imbalanced.png",
+        description: "嚴重偏科的特異人才，獨一無二的存在",
         condition: (stats) => {
             const values = Object.values(stats).sort((a, b) => b - a);
             return values[0] - values[3] >= 8;
@@ -311,9 +339,10 @@ const EVOLUTIONS = [
     },
     {
         id: "casual_cultivator",
-        name: "隨緣修煉雞",
+        name: "隨緣茶道雞",
         emoji: "☯️",
-        description: "順其自然，隨遇而安",
+        image: "assets/images/evo_casual_cultivator.png",
+        description: "順其自然，隨遇而安，享受牧場生活",
         condition: (stats) => {
             const values = Object.values(stats);
             return values.every(v => v >= 3 && v <= 7) && new Set(values).size >= 3;
@@ -326,7 +355,8 @@ const EVOLUTIONS = [
         id: "mystery_mutant",
         name: "神秘變異雞",
         emoji: "👽",
-        description: "無法預測的神秘形態",
+        image: "assets/images/evo_mystery_mutant.png",
+        description: "無法預測的神秘形態，牧場的傳說",
         condition: (stats) => {
             // 特殊組合：例如質數組合等
             const values = Object.values(stats);
@@ -338,6 +368,32 @@ const EVOLUTIONS = [
         badge: "神秘來客"
     }
 ];
+
+// 科目名稱對照
+const SUBJECT_NAMES = {
+    chinese: "中文",
+    english: "英文",
+    math: "數學",
+    general: "常識"
+};
+
+// 科目圖示對照
+const SUBJECT_ICONS = {
+    chinese: "🌾",
+    english: "🌽",
+    math: "🥕",
+    general: "🍅"
+};
+
+// 年級名稱對照
+const GRADE_NAMES = {
+    1: "一年級",
+    2: "二年級",
+    3: "三年級",
+    4: "四年級",
+    5: "五年級",
+    6: "六年級"
+};
 
 // 進化計算函數
 function calculateEvolution(stats) {
@@ -383,4 +439,43 @@ function getCollectedEvolutions(unlockedIds) {
 function filterEvolutionsByType(type) {
     if (type === 'all') return EVOLUTIONS;
     return EVOLUTIONS.filter(e => e.type === type);
+}
+
+// 獲取雞隻圖片路徑
+function getChickenImage(stage, evolutionId = null) {
+    if (stage === 'egg') {
+        return 'assets/images/chicken_egg.png';
+    } else if (stage === 'baby') {
+        return 'assets/images/chicken_baby.png';
+    } else if (stage === 'evolved' && evolutionId) {
+        const evolution = EVOLUTIONS.find(e => e.id === evolutionId);
+        return evolution ? evolution.image : 'assets/images/chicken_basic.png';
+    }
+    return 'assets/images/chicken_basic.png';
+}
+
+// 獲取雞隻名稱
+function getChickenName(stage, evolutionId = null) {
+    if (stage === 'egg') {
+        return '牧場蛋';
+    } else if (stage === 'baby') {
+        return '小雞仔';
+    } else if (stage === 'evolved' && evolutionId) {
+        const evolution = EVOLUTIONS.find(e => e.id === evolutionId);
+        return evolution ? evolution.name : '牧場雞';
+    }
+    return '牧場雞';
+}
+
+// 獲取雞隻描述
+function getChickenDescription(stage, evolutionId = null) {
+    if (stage === 'egg') {
+        return '等待孵化...';
+    } else if (stage === 'baby') {
+        return '努力學習中...';
+    } else if (stage === 'evolved' && evolutionId) {
+        const evolution = EVOLUTIONS.find(e => e.id === evolutionId);
+        return evolution ? evolution.description : '一隻普通的牧場雞';
+    }
+    return '一隻普通的牧場雞';
 }

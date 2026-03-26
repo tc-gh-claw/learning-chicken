@@ -1,19 +1,37 @@
-/* 學習雞 - 主樣式 */
+/* 星露牧場 - Stardew Valley 風格主樣式 */
 
 :root {
-    --primary: #FF9F43;
-    --secondary: #FECA57;
-    --accent: #FF6B6B;
-    --success: #1DD1A1;
-    --warning: #FECA57;
-    --info: #48DBFB;
-    --text: #2D3436;
-    --text-light: #636E72;
-    --bg: #FEF9E7;
-    --card-bg: #FFFFFF;
-    --shadow: 0 4px 15px rgba(0,0,0,0.1);
-    --shadow-hover: 0 8px 25px rgba(0,0,0,0.15);
-    --radius: 16px;
+    /* 星露谷配色 */
+    --grass-green: #7CB342;
+    --grass-dark: #558B2F;
+    --soil-brown: #8D6E63;
+    --soil-dark: #5D4037;
+    --sky-blue: #87CEEB;
+    --sky-light: #B3E5FC;
+    --sunset-orange: #FFAB91;
+    --wheat-yellow: #FFD54F;
+    --wood-brown: #A1887F;
+    --wood-dark: #6D4C41;
+    --flower-pink: #F48FB1;
+    --leaf-green: #66BB6A;
+    --night-blue: #5C6BC0;
+    --cloud-white: #FAFAFA;
+    
+    /* 功能色 */
+    --primary: #7CB342;
+    --primary-dark: #558B2F;
+    --secondary: #FFD54F;
+    --accent: #FFAB91;
+    --success: #66BB6A;
+    --warning: #FFB74D;
+    --info: #64B5F6;
+    --text: #3E2723;
+    --text-light: #6D4C41;
+    --bg: #F1F8E9;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --shadow: 0 4px 12px rgba(62, 39, 35, 0.15);
+    --shadow-hover: 0 8px 24px rgba(62, 39, 35, 0.2);
+    --radius: 12px;
     --radius-sm: 8px;
     --font-display: 'ZCOOL KuaiLe', cursive;
     --font-body: 'Noto Sans TC', sans-serif;
@@ -27,7 +45,7 @@
 
 body {
     font-family: var(--font-body);
-    background: linear-gradient(135deg, #FEF9E7 0%, #FFF5E6 50%, #FFF0F5 100%);
+    background: linear-gradient(180deg, var(--sky-blue) 0%, var(--sky-light) 40%, var(--grass-green) 40%, var(--grass-dark) 100%);
     min-height: 100vh;
     color: var(--text);
     overflow-x: hidden;
@@ -38,6 +56,8 @@ body {
     margin: 0 auto;
     min-height: 100vh;
     position: relative;
+    background: url('../assets/images/bg_farm.png') no-repeat center top;
+    background-size: cover;
 }
 
 /* 畫面切換 */
@@ -65,6 +85,7 @@ body {
     justify-content: center;
     text-align: center;
     padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.9);
 }
 
 #start-screen.active {
@@ -76,9 +97,18 @@ body {
 }
 
 .chicken-logo {
-    font-size: 120px;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 20px;
     animation: bounce 2s infinite;
-    margin-bottom: 20px;
+    image-rendering: pixelated;
+}
+
+.chicken-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2));
 }
 
 @keyframes bounce {
@@ -89,8 +119,10 @@ body {
 h1 {
     font-family: var(--font-display);
     font-size: 48px;
-    color: var(--primary);
-    text-shadow: 3px 3px 0px rgba(255,159,67,0.3);
+    color: var(--grass-dark);
+    text-shadow: 
+        3px 3px 0px rgba(255,255,255,0.8),
+        -1px -1px 0px rgba(255,255,255,0.8);
     margin-bottom: 10px;
 }
 
@@ -116,7 +148,7 @@ h1 {
     opacity: 0.6;
 }
 
-/* ===== 按鈕樣式 ===== */
+/* ===== 按鈕樣式 - 木牌風格 ===== */
 .btn {
     padding: 16px 32px;
     border: none;
@@ -131,61 +163,80 @@ h1 {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--wood-brown), var(--wood-dark));
     color: white;
-    box-shadow: 0 4px 15px rgba(255,159,67,0.4);
+    box-shadow: 
+        0 4px 0 var(--soil-dark),
+        0 6px 12px rgba(0,0,0,0.2);
+    border: 3px solid var(--wood-dark);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255,159,67,0.5);
+    box-shadow: 
+        0 6px 0 var(--soil-dark),
+        0 8px 16px rgba(0,0,0,0.25);
 }
 
 .btn-primary:active {
-    transform: translateY(0);
+    transform: translateY(2px);
+    box-shadow: 
+        0 2px 0 var(--soil-dark),
+        0 4px 8px rgba(0,0,0,0.2);
 }
 
 .btn-secondary {
-    background: white;
+    background: linear-gradient(135deg, var(--cloud-white), #F5F5F5);
     color: var(--text);
-    border: 2px solid var(--secondary);
+    border: 3px solid var(--wood-brown);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .btn-secondary:hover {
-    background: var(--secondary);
-    color: white;
+    background: linear-gradient(135deg, #FFF8E1, var(--wheat-yellow));
+    border-color: var(--wheat-yellow);
 }
 
 .btn-feed {
-    background: linear-gradient(135deg, var(--success), #10AC84);
+    background: linear-gradient(135deg, var(--grass-green), var(--grass-dark));
     color: white;
     width: 100%;
     font-size: 20px;
-    box-shadow: 0 4px 15px rgba(29,209,161,0.4);
+    box-shadow: 
+        0 4px 0 var(--primary-dark),
+        0 6px 12px rgba(0,0,0,0.2);
+    border: 3px solid var(--primary-dark);
 }
 
 .btn-feed:disabled {
-    background: #B2BEC3;
+    background: #BDBDBD;
+    border-color: #9E9E9E;
     cursor: not-allowed;
     box-shadow: none;
 }
 
 .btn-feed:not(:disabled):hover {
     transform: scale(1.02);
+    box-shadow: 
+        0 6px 0 var(--primary-dark),
+        0 8px 16px rgba(0,0,0,0.25);
 }
 
 .btn-menu {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: white;
+    background: linear-gradient(135deg, var(--wood-brown), var(--wood-dark));
     border: none;
     font-size: 20px;
     cursor: pointer;
     box-shadow: var(--shadow);
+    color: white;
 }
 
 .btn-back {
@@ -194,6 +245,7 @@ h1 {
     font-size: 24px;
     cursor: pointer;
     padding: 8px;
+    color: var(--text);
 }
 
 /* ===== 遊戲頭部 ===== */
@@ -202,20 +254,23 @@ h1 {
     align-items: center;
     gap: 15px;
     margin-bottom: 20px;
-    padding: 10px;
-    background: white;
+    padding: 12px;
+    background: var(--card-bg);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    border: 2px solid var(--wood-brown);
 }
 
 .level-badge {
-    background: linear-gradient(135deg, var(--accent), #FF8E8E);
-    color: white;
+    background: linear-gradient(135deg, var(--wheat-yellow), #FFB300);
+    color: var(--text);
     padding: 8px 16px;
     border-radius: 20px;
     font-weight: 700;
     font-size: 16px;
     white-space: nowrap;
+    border: 2px solid var(--wood-dark);
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.5);
 }
 
 .progress-container {
@@ -230,59 +285,45 @@ h1 {
 }
 
 .progress-bar {
-    height: 10px;
-    background: #E8E8E8;
-    border-radius: 5px;
+    height: 12px;
+    background: #E0E0E0;
+    border-radius: 6px;
     overflow: hidden;
+    border: 2px solid var(--wood-brown);
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--success), #10AC84);
-    border-radius: 5px;
+    background: linear-gradient(90deg, var(--grass-green), var(--leaf-green));
+    border-radius: 4px;
     transition: width 0.5s ease;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.4);
 }
 
 /* ===== 雞舍場景 ===== */
 .chicken-house {
-    background: white;
+    background: var(--card-bg);
     border-radius: var(--radius);
     padding: 20px;
     box-shadow: var(--shadow);
     margin-bottom: 20px;
+    border: 3px solid var(--wood-brown);
+    position: relative;
+}
+
+.chicken-house::before {
+    content: '🌾';
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    font-size: 24px;
 }
 
 .scene-background {
     position: relative;
-    height: 80px;
+    height: 60px;
     margin-bottom: 10px;
     overflow: hidden;
-}
-
-.clouds {
-    position: absolute;
-    top: 10px;
-    font-size: 24px;
-    opacity: 0.6;
-    animation: float 6s infinite ease-in-out;
-}
-
-.sun {
-    position: absolute;
-    top: 5px;
-    right: 20px;
-    font-size: 40px;
-    animation: rotate 20s linear infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(20px); }
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
 }
 
 /* ===== 學習雞 ===== */
@@ -290,50 +331,39 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px 0;
+    padding: 20px 0;
     position: relative;
 }
 
 .chicken {
     position: relative;
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .chicken-body {
-    font-size: 100px;
+    width: 128px;
+    height: 128px;
     z-index: 2;
     animation: chickenIdle 3s infinite ease-in-out;
-    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.15));
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
     transition: all 0.3s ease;
 }
 
-/* 雞仔眼睛閃爍效果 */
-.chicken-body::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #2D3436;
-    border-radius: 50%;
-    top: 35%;
-    left: 45%;
-    animation: blink 4s infinite;
-    opacity: 0.8;
-}
-
-@keyframes blink {
-    0%, 48%, 52%, 100% { transform: scaleY(1); }
-    50% { transform: scaleY(0.1); }
+.chicken-body img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
 }
 
 /* 不同階段的特殊效果 */
 .chicken.stage-egg .chicken-body {
     animation: eggWiggle 4s infinite ease-in-out;
-    filter: drop-shadow(0 3px 8px rgba(255,159,67,0.3));
+    filter: drop-shadow(0 3px 10px rgba(135,206,235,0.4));
 }
 
 @keyframes eggWiggle {
@@ -345,14 +375,14 @@ h1 {
 
 .chicken.stage-baby .chicken-body {
     animation: babyHop 2s infinite ease-in-out;
-    filter: drop-shadow(0 5px 12px rgba(255,214,100,0.4));
+    filter: drop-shadow(0 5px 15px rgba(255,230,109,0.5));
 }
 
 @keyframes babyHop {
-    0%, 100% { transform: translateY(0) rotate(-5deg); }
-    25% { transform: translateY(-8px) rotate(5deg); }
-    50% { transform: translateY(0) rotate(-5deg); }
-    75% { transform: translateY(-4px) rotate(5deg); }
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    25% { transform: translateY(-10px) rotate(3deg); }
+    50% { transform: translateY(0) rotate(-3deg); }
+    75% { transform: translateY(-5px) rotate(3deg); }
 }
 
 .chicken.stage-evolved .chicken-body {
@@ -360,8 +390,8 @@ h1 {
 }
 
 @keyframes evolvedFloat {
-    0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 5px 15px rgba(255,159,67,0.3)); }
-    50% { transform: translateY(-10px) scale(1.05); filter: drop-shadow(0 10px 25px rgba(255,159,67,0.5)); }
+    0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 5px 20px rgba(124,179,66,0.4)); }
+    50% { transform: translateY(-12px) scale(1.05); filter: drop-shadow(0 12px 30px rgba(124,179,66,0.6)); }
 }
 
 /* 餵食時的開心動畫 */
@@ -379,10 +409,14 @@ h1 {
 /* 愛心飄浮效果 */
 .love-particle {
     position: absolute;
-    font-size: 20px;
+    width: 24px;
+    height: 24px;
+    background: url('../assets/images/ui_heart.png') no-repeat center;
+    background-size: contain;
     animation: floatUp 1.5s ease-out forwards;
     pointer-events: none;
     z-index: 10;
+    image-rendering: pixelated;
 }
 
 @keyframes floatUp {
@@ -399,10 +433,14 @@ h1 {
 /* 星星閃爍效果 */
 .star-particle {
     position: absolute;
-    font-size: 16px;
+    width: 20px;
+    height: 20px;
+    background: url('../assets/images/ui_star.png') no-repeat center;
+    background-size: contain;
     animation: starTwinkle 1s ease-out forwards;
     pointer-events: none;
     z-index: 10;
+    image-rendering: pixelated;
 }
 
 @keyframes starTwinkle {
@@ -418,38 +456,40 @@ h1 {
 
 .chicken-shadow {
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     width: 80px;
     height: 20px;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.15);
     border-radius: 50%;
     animation: shadowScale 3s infinite ease-in-out;
 }
 
 @keyframes shadowScale {
-    0%, 100% { transform: scale(1); opacity: 0.3; }
-    50% { transform: scale(0.9); opacity: 0.2; }
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(0.9); opacity: 0.25; }
 }
 
 .chicken-name {
     font-family: var(--font-display);
-    font-size: 24px;
-    color: var(--primary);
-    margin-top: 15px;
+    font-size: 26px;
+    color: var(--grass-dark);
+    margin-top: 10px;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
 }
 
 .chicken-title {
     font-size: 14px;
     color: var(--text-light);
     margin-top: 5px;
+    font-style: italic;
 }
 
 .evolution-glow {
     position: absolute;
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,214,100,0.4) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,215,0,0.5) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.5s;
 }
@@ -464,7 +504,7 @@ h1 {
     50% { transform: scale(1.1); opacity: 1; }
 }
 
-/* ===== 飼料槽 ===== */
+/* ===== 飼料槽 - 改為作物 ===== */
 .feed-slots {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -473,7 +513,7 @@ h1 {
 }
 
 .feed-slot {
-    background: #F8F9FA;
+    background: linear-gradient(135deg, #FFF8E1, #FFECB3);
     border: 3px solid transparent;
     border-radius: var(--radius-sm);
     padding: 15px 10px;
@@ -484,6 +524,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .feed-slot:hover {
@@ -491,17 +532,25 @@ h1 {
     box-shadow: var(--shadow-hover);
 }
 
-.feed-slot[data-subject="chinese"] { border-color: #FF6B6B; }
-.feed-slot[data-subject="english"] { border-color: #4ECDC4; }
-.feed-slot[data-subject="math"] { border-color: #45B7D1; }
-.feed-slot[data-subject="general"] { border-color: #96CEB4; }
+.feed-slot[data-subject="chinese"] { border-color: #E53935; }
+.feed-slot[data-subject="english"] { border-color: #FFD54F; }
+.feed-slot[data-subject="math"] { border-color: #FF7043; }
+.feed-slot[data-subject="general"] { border-color: #43A047; }
 
 .feed-icon {
-    font-size: 28px;
+    width: 48px;
+    height: 48px;
+    image-rendering: pixelated;
+}
+
+.feed-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .feed-count {
-    background: var(--primary);
+    background: var(--grass-green);
     color: white;
     min-width: 28px;
     height: 28px;
@@ -511,12 +560,14 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid var(--grass-dark);
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
 }
 
 .feed-label {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-light);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .feed-hint {
@@ -524,16 +575,18 @@ h1 {
     font-size: 13px;
     color: var(--text-light);
     margin-top: 10px;
+    font-style: italic;
 }
 
 /* ===== 科目統計 ===== */
 .subject-stats {
     display: flex;
     justify-content: space-around;
-    background: white;
+    background: var(--card-bg);
     border-radius: var(--radius);
     padding: 15px;
     box-shadow: var(--shadow);
+    border: 2px solid var(--wood-brown);
 }
 
 .stat-item {
@@ -544,44 +597,54 @@ h1 {
 }
 
 .stat-icon {
-    font-size: 24px;
+    width: 36px;
+    height: 36px;
+    image-rendering: pixelated;
+}
+
+.stat-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .stat-value {
     font-size: 18px;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--grass-dark);
 }
 
 /* ===== 答題畫面 ===== */
 #quiz-screen {
     padding: 0;
-    background: linear-gradient(180deg, #FEF9E7 0%, #FFF 100%);
+    background: linear-gradient(180deg, var(--sky-light) 0%, #FFF 100%);
 }
 
 .quiz-header {
     display: flex;
     align-items: center;
     padding: 15px 20px;
-    background: white;
+    background: var(--card-bg);
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     gap: 15px;
+    border-bottom: 3px solid var(--wood-brown);
 }
 
 .quiz-subject {
     flex: 1;
     font-family: var(--font-display);
     font-size: 24px;
-    color: var(--primary);
+    color: var(--grass-dark);
 }
 
 .quiz-grade {
-    background: var(--secondary);
+    background: var(--wheat-yellow);
     color: var(--text);
     padding: 6px 12px;
     border-radius: 15px;
     font-size: 13px;
     font-weight: 500;
+    border: 2px solid var(--wood-brown);
 }
 
 .quiz-container {
@@ -593,10 +656,11 @@ h1 {
     color: var(--text-light);
     font-size: 14px;
     margin-bottom: 20px;
+    font-weight: 500;
 }
 
 .question-card {
-    background: white;
+    background: var(--card-bg);
     border-radius: var(--radius);
     padding: 25px 20px;
     margin-bottom: 25px;
@@ -605,6 +669,7 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border: 3px solid var(--wood-brown);
 }
 
 .question-text {
@@ -628,8 +693,8 @@ h1 {
 }
 
 .option-btn {
-    background: white;
-    border: 2px solid #E8E8E8;
+    background: var(--card-bg);
+    border: 3px solid var(--wood-brown);
     border-radius: var(--radius-sm);
     padding: 18px 20px;
     font-size: 17px;
@@ -642,20 +707,21 @@ h1 {
 }
 
 .option-btn:hover:not(.disabled) {
-    border-color: var(--primary);
-    background: #FFF9F0;
+    border-color: var(--grass-green);
+    background: #F1F8E9;
+    transform: translateX(5px);
 }
 
 .option-btn.correct {
-    background: #D4EDDA;
+    background: #E8F5E9;
     border-color: var(--success);
-    color: #155724;
+    color: #1B5E20;
 }
 
 .option-btn.wrong {
-    background: #F8D7DA;
-    border-color: var(--accent);
-    color: #721C24;
+    background: #FFEBEE;
+    border-color: #E53935;
+    color: #B71C1C;
 }
 
 .option-btn.disabled {
@@ -666,8 +732,8 @@ h1 {
 .option-letter {
     width: 32px;
     height: 32px;
-    background: var(--secondary);
-    color: var(--text);
+    background: linear-gradient(135deg, var(--wood-brown), var(--wood-dark));
+    color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -675,6 +741,7 @@ h1 {
     font-weight: 700;
     font-size: 14px;
     flex-shrink: 0;
+    border: 2px solid var(--soil-dark);
 }
 
 /* ===== 答題結果 ===== */
@@ -695,8 +762,16 @@ h1 {
 }
 
 .result-icon {
-    font-size: 80px;
+    width: 80px;
+    height: 80px;
     margin-bottom: 20px;
+    image-rendering: pixelated;
+}
+
+.result-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .result-text {
@@ -708,16 +783,17 @@ h1 {
 
 .result-reward {
     font-size: 18px;
-    color: var(--primary);
+    color: var(--grass-dark);
     margin-bottom: 30px;
     padding: 15px 25px;
-    background: #FFF9F0;
+    background: #F1F8E9;
     border-radius: var(--radius-sm);
+    border: 2px solid var(--grass-green);
 }
 
 /* ===== 進化畫面 ===== */
 #evolution-screen {
-    background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+    background: linear-gradient(135deg, #5C6BC0 0%, #3949AB 50%, #1A237E 100%);
 }
 
 .evolution-scene {
@@ -735,7 +811,8 @@ h1 {
     font-family: var(--font-display);
     font-size: 36px;
     margin-bottom: 10px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    color: var(--wheat-yellow);
 }
 
 .evolution-subtitle {
@@ -752,12 +829,21 @@ h1 {
 }
 
 .evo-chicken {
-    font-size: 100px;
+    width: 128px;
+    height: 128px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.5s;
+    image-rendering: pixelated;
+}
+
+.evo-chicken img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 30px rgba(255,215,0,0.5));
 }
 
 .evo-chicken.hidden {
@@ -792,14 +878,27 @@ h1 {
     padding: 20px;
     margin-bottom: 30px;
     backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+.stat-row {
+    padding: 8px 0;
+    font-size: 16px;
 }
 
 .btn-evolution {
-    background: linear-gradient(135deg, #F093FB, #F5576C);
+    background: linear-gradient(135deg, var(--sunset-orange), #FF7043);
     color: white;
     font-size: 22px;
     padding: 20px 50px;
-    box-shadow: 0 8px 30px rgba(245,87,108,0.4);
+    box-shadow: 0 8px 30px rgba(255,112,67,0.4);
+    border: 3px solid #E64A19;
+    animation: glow 2s infinite;
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 8px 30px rgba(255,112,67,0.4); }
+    50% { box-shadow: 0 8px 40px rgba(255,112,67,0.7); }
 }
 
 .btn-evolution:hover {
@@ -813,23 +912,27 @@ h1 {
     gap: 15px;
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #F0F0F0;
+    border-bottom: 3px solid var(--wood-brown);
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: var(--radius);
 }
 
 .screen-header h2 {
     flex: 1;
     font-family: var(--font-display);
     font-size: 24px;
-    color: var(--text);
+    color: var(--grass-dark);
 }
 
 .collection-count {
-    background: var(--primary);
+    background: var(--grass-green);
     color: white;
     padding: 8px 15px;
     border-radius: 20px;
     font-weight: 700;
     font-size: 14px;
+    border: 2px solid var(--grass-dark);
 }
 
 .collection-filter {
@@ -843,18 +946,19 @@ h1 {
 
 .filter-btn {
     padding: 8px 16px;
-    border: 2px solid #E8E8E8;
+    border: 2px solid var(--wood-brown);
     background: white;
     border-radius: 20px;
     font-size: 14px;
     white-space: nowrap;
     cursor: pointer;
     transition: all 0.2s;
+    font-weight: 500;
 }
 
 .filter-btn.active {
-    background: var(--primary);
-    border-color: var(--primary);
+    background: var(--grass-green);
+    border-color: var(--grass-dark);
     color: white;
 }
 
@@ -878,6 +982,7 @@ h1 {
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    border: 3px solid var(--wood-brown);
 }
 
 .collection-item:hover {
@@ -886,7 +991,7 @@ h1 {
 }
 
 .collection-item.locked {
-    background: linear-gradient(135deg, #F0F0F0 0%, #E8E8E8 100%);
+    background: linear-gradient(135deg, #E0E0E0 0%, #BDBDBD 100%);
     opacity: 0.6;
     cursor: not-allowed;
 }
@@ -895,23 +1000,31 @@ h1 {
     content: '🔒';
     position: absolute;
     font-size: 20px;
-    opacity: 0.3;
+    opacity: 0.5;
 }
 
 .collection-item.unlocked {
-    border: 2px solid var(--primary);
+    border: 3px solid var(--grass-green);
     animation: unlockedPulse 2s infinite;
 }
 
 @keyframes unlockedPulse {
-    0%, 100% { box-shadow: 0 4px 15px rgba(255,159,67,0.2); }
-    50% { box-shadow: 0 4px 20px rgba(255,159,67,0.4); }
+    0%, 100% { box-shadow: 0 4px 15px rgba(124,179,66,0.2); }
+    50% { box-shadow: 0 4px 20px rgba(124,179,66,0.4); }
 }
 
 .collection-emoji {
-    font-size: 40px;
+    width: 56px;
+    height: 56px;
     margin-bottom: 5px;
     transition: all 0.3s;
+    image-rendering: pixelated;
+}
+
+.collection-emoji img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .collection-item:hover .collection-emoji {
@@ -924,6 +1037,7 @@ h1 {
     color: var(--text);
     font-weight: 500;
     transition: all 0.3s;
+    line-height: 1.3;
 }
 
 .collection-item:hover .collection-name {
@@ -950,7 +1064,7 @@ h1 {
 }
 
 .modal-content {
-    background: white;
+    background: var(--card-bg);
     border-radius: var(--radius);
     padding: 30px;
     max-width: 400px;
@@ -958,6 +1072,8 @@ h1 {
     max-height: 80vh;
     overflow-y: auto;
     animation: modalIn 0.3s ease;
+    border: 4px solid var(--wood-brown);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 @keyframes modalIn {
@@ -970,7 +1086,7 @@ h1 {
     font-size: 24px;
     text-align: center;
     margin-bottom: 20px;
-    color: var(--primary);
+    color: var(--grass-dark);
 }
 
 .tutorial-content {
@@ -987,7 +1103,7 @@ h1 {
 .step-num {
     width: 32px;
     height: 32px;
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--grass-green), var(--grass-dark));
     color: white;
     border-radius: 50%;
     display: flex;
@@ -995,6 +1111,7 @@ h1 {
     justify-content: center;
     font-weight: 700;
     flex-shrink: 0;
+    border: 2px solid var(--soil-dark);
 }
 
 .tutorial-step p {
@@ -1004,7 +1121,7 @@ h1 {
 }
 
 .tutorial-step strong {
-    color: var(--primary);
+    color: var(--grass-dark);
 }
 
 /* 進化結果彈窗 */
@@ -1013,8 +1130,17 @@ h1 {
 }
 
 .result-chicken {
-    font-size: 100px;
-    margin-bottom: 15px;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    image-rendering: pixelated;
+}
+
+.result-chicken img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2));
 }
 
 .result-description {
@@ -1032,12 +1158,13 @@ h1 {
 }
 
 .badge {
-    background: linear-gradient(135deg, var(--secondary), var(--primary));
-    color: white;
+    background: linear-gradient(135deg, var(--wheat-yellow), #FFB300);
+    color: var(--text);
     padding: 6px 14px;
     border-radius: 15px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 700;
+    border: 2px solid var(--wood-dark);
 }
 
 /* ===== 動畫效果 ===== */
@@ -1056,13 +1183,14 @@ h1 {
 /* ===== 響應式設計 ===== */
 @media (max-width: 400px) {
     h1 { font-size: 40px; }
-    .chicken-logo { font-size: 100px; }
+    .chicken-logo { width: 120px; height: 120px; }
     .feed-slots { gap: 8px; }
     .collection-grid { grid-template-columns: repeat(2, 1fr); }
+    .collection-emoji { width: 48px; height: 48px; }
 }
 
 @media (min-width: 481px) {
     #app {
-        box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        box-shadow: 0 0 40px rgba(0,0,0,0.2);
     }
 }
