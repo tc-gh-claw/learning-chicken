@@ -1,4 +1,5 @@
 /* 星露牧場 - Stardew Valley 風格主樣式 */
+/* 使用霞鶩文楷 (LXGW WenKai) - 開源免費中文字體 */
 
 :root {
     /* 星露谷配色 */
@@ -33,8 +34,9 @@
     --shadow-hover: 0 8px 24px rgba(62, 39, 35, 0.2);
     --radius: 12px;
     --radius-sm: 8px;
-    --font-display: 'ZCOOL KuaiLe', cursive;
-    --font-body: 'Noto Sans TC', sans-serif;
+    /* 統一中文字體：霞鶩文楷 + 系統後備 */
+    --font-display: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+    --font-body: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
 }
 
 * {
