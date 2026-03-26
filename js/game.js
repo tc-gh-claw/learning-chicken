@@ -3,6 +3,43 @@
  * Stardew Valley風格學習遊戲
  */
 
+// ===== 輔助函數（確保在類定義之前存在）=====
+function getChickenImage(stage, evolutionId = null) {
+    if (stage === 'egg') {
+        return 'assets/images/chicken_egg.png';
+    } else if (stage === 'baby') {
+        return 'assets/images/chicken_baby.png';
+    } else if (stage === 'evolved' && evolutionId) {
+        const evolution = EVOLUTIONS.find(e => e.id === evolutionId);
+        return evolution ? evolution.image : 'assets/images/chicken_basic.png';
+    }
+    return 'assets/images/chicken_basic.png';
+}
+
+function getChickenName(stage, evolutionId = null) {
+    if (stage === 'egg') {
+        return '牧場蛋';
+    } else if (stage === 'baby') {
+        return '小雞仔';
+    } else if (stage === 'evolved' && evolutionId) {
+        const evolution = EVOLUTIONS.find(e => e.id === evolutionId);
+        return evolution ? evolution.name : '牧場雞';
+    }
+    return '牧場雞';
+}
+
+function getChickenDescription(stage, evolutionId = null) {
+    if (stage === 'egg') {
+        return '等待孵化...';
+    } else if (stage === 'baby') {
+        return '努力學習中...';
+    } else if (stage === 'evolved' && evolutionId) {
+        const evolution = EVOLUTIONS.find(e => e.id === evolutionId);
+        return evolution ? evolution.description : '一隻普通的牧場雞';
+    }
+    return '一隻普通的牧場雞';
+}
+
 class LearningChickenGame {
     constructor() {
         this.state = this.loadState() || this.getInitialState();
