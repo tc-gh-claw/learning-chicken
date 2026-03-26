@@ -46,6 +46,7 @@ class LearningChickenGame {
 
     // ===== 遊戲開始 =====
     start() {
+        console.log('[星露牧場] 開始遊戲被調用');
         try {
             if (typeof soundSystem !== 'undefined') {
                 soundSystem.init();
@@ -54,8 +55,15 @@ class LearningChickenGame {
         } catch (e) {
             console.warn('音效初始化失敗:', e);
         }
-        this.updateUI();
-        this.showScreen('main-screen');
+        
+        try {
+            this.updateUI();
+            this.showScreen('main-screen');
+            console.log('[星露牧場] 已成功切換到主畫面');
+        } catch (e) {
+            console.error('[星露牧場] 切換畫面失敗:', e);
+            alert('遊戲初始化失敗，請刷新頁面重試');
+        }
     }
 
     // ===== 更新主畫面 =====
@@ -572,9 +580,33 @@ class LearningChickenGame {
 }
 
 // 初始化遊戲
-let game;
+let game = null;
+
 document.addEventListener('DOMContentLoaded', () => {
-    game = new LearningChickenGame();
+    console.log('[星露牧場] DOM 已加載，開始初始化...');
+    
+    try {
+        // 檢查依賴
+        if (typeof QUESTION_BANK === 'undefined') {
+            console.error('[星露牧場] questions.js 未正確加載');
+        }
+        if (typeof EVOLUTIONS === 'undefined') {
+            console.error('[星露牧場] evolutions.js 未正確加載');
+        }
+        
+        // 創建遊戲實例
+        game = new LearningChickenGame();
+        console.log('[星露牧場] 遊戲初始化完成');
+        
+        // 檢查 localStorage 數據
+        const savedState = localStorage.getItem('stardewRanchState');
+        if (savedState) {
+            console.log('[星露牧場] 已載入保存的遊戲進度');
+        }
+    } catch (e) {
+        console.error('[星露牧場] 遊戲初始化失敗:', e);
+        alert('遊戲初始化失敗，請刷新頁面重試');
+    }
 });
 
 // 圖鑑過濾按鈕事件
@@ -582,6 +614,8 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('filter-btn')) {
         document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
         e.target.classList.add('active');
-        game.renderCollection(e.target.dataset.filter);
+        if (game) {
+            game.renderCollection(e.target.dataset.filter);
+        }
     }
 });
