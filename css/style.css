@@ -926,10 +926,19 @@ h1 {
     transform: scale(1.05);
 }
 
+/* ===== 圖鑑畫面 ===== */
 #collection-screen.active {
     display: flex;
     flex-direction: column;
 }
+
+#collection-screen .collection-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 20px 20px;
+}
+
 .screen-header {
     display: flex;
     align-items: center;
