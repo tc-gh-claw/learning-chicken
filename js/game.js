@@ -505,6 +505,54 @@ class LearningChickenGame {
         this.showScreen('collection-screen');
     }
 
+    // ===== 設置 =====
+    showSettings() {
+        const settingsHtml = `
+            <div class="modal active" id="settings-modal">
+                <div class="modal-content" style="max-width: 320px;">
+                    <h3>⚙️ 設置</h3>
+                    <div style="margin: 20px 0; text-align: left;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #636E72; font-size: 14px;">🎵 音效</label>
+                            <button id="btn-sound" class="btn ${soundSystem && soundSystem.enabled ? 'btn-primary' : 'btn-secondary'}" style="width: 100%;">
+                                ${soundSystem && soundSystem.enabled ? '🔊 開啟' : '🔇 關閉'}
+                            </button>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #636E72; font-size: 14px;">📊 遊戲統計</label>
+                            <div style="background: #F8F9FA; padding: 12px; border-radius: 8px; font-size: 13px;">
+                                <div>等級: Lv.${this.state.level}</div>
+                                <div>已答對: ${Object.values(this.state.stats).reduce((a,b)=>a+b,0)} 題</div>
+                                <div>已收集: ${this.state.unlockedEvolutions.length}/30 形態</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="document.getElementById('settings-modal').remove()" style="width: 100%;">關閉</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', settingsHtml);
+        
+        // 綁定音效切換
+        const soundBtn = document.getElementById('btn-sound');
+        if (soundBtn) {
+            soundBtn.onclick = () => {
+                if (typeof soundSystem !== 'undefined') {
+                    soundSystem.toggle();
+                    soundBtn.textContent = soundSystem.enabled ? '🔊 開啟' : '🔇 關閉';
+                    soundBtn.className = `btn ${soundSystem.enabled ? 'btn-primary' : 'btn-secondary'}`;
+                }
+            };
+        }
+        
+        // 點擊背景關閉
+        const modal = document.getElementById('settings-modal');
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.remove();
+        });
+    }
+
     renderCollection(filter) {
         const grid = document.getElementById('collection-grid');
         const evolutions = filter === 'all' ? EVOLUTIONS : EVOLUTIONS.filter(e => e.type === filter);
@@ -577,7 +625,10 @@ class LearningChickenGame {
     toggleMenu() {
         const choice = prompt('選擇功能：\n1. 圖鑑\n2. 設置\n3. 重置遊戲\n\n(輸入數字 1-3)');
         
+        if (choice === null || choice === '') return; // 用戶取消
+        
         if (choice === '1') this.showCollection();
+        else if (choice === '2') this.showSettings();
         else if (choice === '3' && confirm('確定要重置遊戲嗎？⚠️ 遊戲進度會重置，但已收集的圖鑑會保留！')) {
             // 保存圖鑑進度
             const preservedCollection = this.state.unlockedEvolutions || [];
