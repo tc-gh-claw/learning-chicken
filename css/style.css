@@ -77,10 +77,12 @@ body {
     animation: fadeIn 0.3s ease;
     overflow-y: auto; /* 內容可滾動，但畫面本身固定 */
     -webkit-overflow-scrolling: touch;
+    z-index: 1; /* 默認層級 */
 }
 
 .screen.active {
     display: block;
+    z-index: 10; /* active 畫面在最上層 */
 }
 
 @keyframes fadeIn {
@@ -927,6 +929,10 @@ h1 {
 }
 
 /* ===== 圖鑑畫面 ===== */
+#collection-screen {
+    background: linear-gradient(180deg, var(--sky-light) 0%, #FFF 100%);
+}
+
 /* 注意：必須用 !important 覆蓋 .screen.active 的 display: block */
 #collection-screen.active {
     display: flex !important;
