@@ -623,32 +623,68 @@ class LearningChickenGame {
 
     // ===== 菜單 =====
     toggleMenu() {
-        const choice = prompt('選擇功能：\n1. 圖鑑\n2. 設置\n3. 重置遊戲\n\n(輸入數字 1-3)');
+        // 創建菜單彈窗代替 prompt
+        const menuHtml = `
+            <div class="modal active" id="menu-modal">
+                <div class="modal-content" style="max-width: 280px;">
+                    <h3>☰ 菜單</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin: 20px 0;">
+                        <button class="btn btn-primary" onclick="game.handleMenuChoice(1)" style="width: 100%;">
+                            📚 圖鑑
+                        </button>
+                        <button class="btn btn-secondary" onclick="game.handleMenuChoice(2)" style="width: 100%;">
+                            ⚙️ 設置
+                        </button>
+                        <button class="btn btn-secondary" onclick="game.handleMenuChoice(3)" style="width: 100%; color: #E74C3C;">
+                            🔄 重置遊戲
+                        </button>
+                    </div>
+                    <button class="btn btn-secondary" onclick="document.getElementById('menu-modal').remove()" style="width: 100%;">
+                        取消
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', menuHtml);
         
-        if (choice === null || choice === '') return; // 用戶取消
+        // 點擊背景關閉
+        const modal = document.getElementById('menu-modal');
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.remove();
+        });
+    }
+    
+    handleMenuChoice(choice) {
+        // 關閉菜單
+        const menuModal = document.getElementById('menu-modal');
+        if (menuModal) menuModal.remove();
         
-        if (choice === '1') this.showCollection();
-        else if (choice === '2') this.showSettings();
-        else if (choice === '3' && confirm('確定要重置遊戲嗎？⚠️ 遊戲進度會重置，但已收集的圖鑑會保留！')) {
-            // 保存圖鑑進度
-            const preservedCollection = this.state.unlockedEvolutions || [];
-            
-            // 重置遊戲
-            localStorage.removeItem('stardewRanchState');
-            this.state = this.getInitialState();
-            
-            // 恢復圖鑑
-            this.state.unlockedEvolutions = preservedCollection;
-            
-            // 確保其他狀態正確初始化
-            this.state.answeredQuestions = { chinese: [], english: [], math: [], general: [] };
-            
-            this.updateUI();
-            
-            // 顯示提示
-            setTimeout(() => {
-                alert(`✅ 遊戲已重置！\n📚 已保留 ${preservedCollection.length}/30 個收集的形態`);
-            }, 100);
+        if (choice === 1) {
+            this.showCollection();
+        } else if (choice === 2) {
+            this.showSettings();
+        } else if (choice === 3) {
+            if (confirm('確定要重置遊戲嗎？⚠️ 遊戲進度會重置，但已收集的圖鑑會保留！')) {
+                // 保存圖鑑進度
+                const preservedCollection = this.state.unlockedEvolutions || [];
+                
+                // 重置遊戲
+                localStorage.removeItem('stardewRanchState');
+                this.state = this.getInitialState();
+                
+                // 恢復圖鑑
+                this.state.unlockedEvolutions = preservedCollection;
+                
+                // 確保其他狀態正確初始化
+                this.state.answeredQuestions = { chinese: [], english: [], math: [], general: [] };
+                
+                this.updateUI();
+                
+                // 顯示提示
+                setTimeout(() => {
+                    alert(`✅ 遊戲已重置！\n📚 已保留 ${preservedCollection.length}/30 個收集的形態`);
+                }, 100);
+            }
         }
     }
 
