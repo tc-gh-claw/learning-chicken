@@ -501,8 +501,15 @@ class LearningChickenGame {
 
     // ===== 圖鑑 =====
     showCollection() {
-        this.renderCollection('all');
-        this.showScreen('collection-screen');
+        console.log('[星露牧場] 顯示圖鑑');
+        try {
+            this.renderCollection('all');
+            this.showScreen('collection-screen');
+            console.log('[星露牧場] 圖鑑顯示完成');
+        } catch (e) {
+            console.error('[星露牧場] 顯示圖鑑失敗:', e);
+            alert('圖鑑載入失敗，請刷新頁面重試');
+        }
     }
 
     // ===== 設置 =====
@@ -555,6 +562,14 @@ class LearningChickenGame {
 
     renderCollection(filter) {
         const grid = document.getElementById('collection-grid');
+        
+        // 檢查 EVOLUTIONS 是否載入
+        if (typeof EVOLUTIONS === 'undefined') {
+            console.error('[星露牧場] EVOLUTIONS 未定義');
+            grid.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;">圖鑑資料載入失敗</div>';
+            return;
+        }
+        
         const evolutions = filter === 'all' ? EVOLUTIONS : EVOLUTIONS.filter(e => e.type === filter);
         
         grid.innerHTML = '';
@@ -655,11 +670,13 @@ class LearningChickenGame {
     }
     
     handleMenuChoice(choice) {
+        console.log('[星露牧場] 菜單選擇:', choice);
         // 關閉菜單
         const menuModal = document.getElementById('menu-modal');
         if (menuModal) menuModal.remove();
         
         if (choice === 1) {
+            console.log('[星露牧場] 打開圖鑑');
             this.showCollection();
         } else if (choice === 2) {
             this.showSettings();
